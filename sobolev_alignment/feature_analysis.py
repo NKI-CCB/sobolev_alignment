@@ -26,10 +26,9 @@ def higher_order_contribution(
     Compute the features corresponding to the Taylor expansion of the kernel, i.e. $x_j exp^{-\gamma xx^T}$ for
     linear features. Returns a sparse pandas DataFrame containing all the features (columns) by samples (rows).
     We here critically rely on the sparsity of the data-matrix to speed up computations. The current implementation is relevant in two cases:
-    <ul>
-    <li> When dimensionality is small
-    <li> When data is sparse.
-    <ul>
+    - When dimensionality is small
+    - When data is sparse.
+
     High-dimensional and dense data matrices would lead to a significant over-head without computational gains,
     and could benefit from another implementation strategy.
 

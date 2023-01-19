@@ -48,6 +48,10 @@ If you found a bug, please use the [issue tracker][issue-tracker].
 ## Added
 
 master_doc = 'index' to docs/source/conf.py
+sphinx-build -b html docs/ docs/html
+sphinx-quickstart docs
+cd docs
+make html
 
 ## Citation
 

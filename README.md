@@ -45,6 +45,10 @@ See the [changelog][changelog].
 For questions and help requests, you can reach out in the [scverse discourse][scverse-discourse].
 If you found a bug, please use the [issue tracker][issue-tracker].
 
+## Added
+
+master_doc = 'index' to docs/source/conf.py
+
 ## Citation
 
 > t.b.a

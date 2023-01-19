@@ -10,6 +10,7 @@ project = "Sobolev Alignment"
 copyright = "2023, Soufiane Mourragui"
 author = "Soufiane Mourragui"
 release = "0.4.0"
+master_doc = "index"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

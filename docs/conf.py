@@ -10,7 +10,6 @@ project = "Sobolev Alignment"
 copyright = "2023, Soufiane Mourragui"
 author = "Soufiane Mourragui"
 release = "0.4.0"
-master_doc = "index"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -18,7 +17,7 @@ master_doc = "index"
 extensions = []
 
 templates_path = ["_templates"]
-exclude_patterns = []
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 
 # -- Options for HTML output -------------------------------------------------

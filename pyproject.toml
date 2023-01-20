@@ -22,7 +22,18 @@ urls.Home-page = "https://github.com/saroudant/sobolev_alignment"
 dependencies = [
     "anndata",
     # for debug logging (referenced from the issue template)
-    "session-info"
+    "session-info",
+    "torch",
+    "numpy",
+    "scipy",
+    "pandas",
+    "matplotlib",
+    "scikit-learn",
+    "torch",
+    "scvi-tools",
+    "scanpy",
+    "hyperopt",
+    "git+https://github.com/FalkonML/falkon"
 ]
 
 [project.optional-dependencies]
@@ -94,8 +105,8 @@ formats = "ipynb,md"
 [tool.cruft]
 skip = [
     "tests",
-    "src/**/__init__.py",
-    "src/**/basic.py",
+    "sobolev_alignment/**/__init__.py",
+    "sobolev_alignment/**/basic.py",
     "docs/api.md",
     "docs/changelog.md",
     "docs/references.bib",

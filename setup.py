@@ -3,6 +3,7 @@ import setuptools
 with open("README.md") as fh:
     long_description = fh.read()
 
+
 setuptools.setup(
     name="sobolev_alignment",
     version="0.4.1",

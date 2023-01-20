@@ -21,4 +21,3 @@ torchaudio==0.13.0
 torchmetrics==0.11.0
 torchvision==0.14.0
 git+https://github.com/NKI-CCB/sobolev_alignment
-git+https://github.com/FalkonML/falkon

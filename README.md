@@ -47,10 +47,10 @@ If you found a bug, please use the [issue tracker][issue-tracker].
 
 ## Citation
 
-> t.b.a
+> Identifying commonalities between cell lines and tumors at the single cell level using Sobolev Alignment of deep generative models, Mourragui et al, 2022, Biorxiv
 
 [scverse-discourse]: https://discourse.scverse.org/
 [issue-tracker]: https://github.com/saroudant/sobolev_alignment/issues
 [changelog]: https://sobolev_alignment.readthedocs.io/latest/changelog.html
-[link-docs]: https://sobolev_alignment.readthedocs.io
-[link-api]: https://sobolev_alignment.readthedocs.io/latest/api.html
+[link-docs]: https://sobolev-alignment.readthedocs.io/en/latest/
+[link-api]: https://sobolev_alignment.readthedocs.io/en/latest/api.html

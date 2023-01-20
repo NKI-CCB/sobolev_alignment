@@ -20,14 +20,13 @@ def higher_order_contribution(
     n_jobs: int = 1,
     return_matrix: bool = False,
 ):
-    r"""
-    Compute the features corresponding to the Taylor expansion of the kernel.
+    r"""Compute the features corresponding to the Taylor expansion of the kernel.
 
     Compute the features corresponding to the Taylor expansion of the kernel, i.e. $x_j exp^{-\gamma xx^T}$ for
     linear features. Returns a sparse pandas DataFrame containing all the features (columns) by samples (rows).
     We here critically rely on the sparsity of the data-matrix to speed up computations. The current implementation is relevant in two cases:
-    - When dimensionality is small
-    - When data is sparse.
+    -When dimensionality is small
+    -When data is sparse.
 
     High-dimensional and dense data matrices would lead to a significant over-head without computational gains,
     and could benefit from another implementation strategy.
@@ -97,8 +96,7 @@ def higher_order_contribution(
 
 
 def _combination_to_idx(idx, p):
-    """
-    Transforms a combination (tuple of feature idx) into an indicative function.
+    """Transforms a combination (tuple of feature idx) into an indicative function.
 
     Parameters
     ----------
@@ -120,8 +118,7 @@ def _combination_to_idx(idx, p):
 
 
 def basis(x, k, gamma):
-    """
-    Computed the basis function for a single gene, except offset term.
+    """Computed the basis function for a single gene, except offset term.
 
     Parameters
     ----------
@@ -179,7 +176,6 @@ def combinatorial_product(x, idx, gamma):
 
 
 def _interaction_name(gene_combi):
-
     combin_name = [f"{g}^{r}" for g, r in zip(*np.unique(gene_combi, return_counts=True))]
     return "*".join(combin_name) if len(combin_name) > 0 else "1"
 
@@ -189,8 +185,7 @@ def _higher_order_interaction_wrapper(data, x, gamma, gene_names):
 
 
 def _compute_offset(data, gamma):
-    r"""
-    Compute the sample-level offset values, i.e. $\exp -\gamma xx^T$.
+    r"""Compute the sample-level offset values, i.e. $\exp -\gamma xx^T$.
 
     Parameters
     ----------

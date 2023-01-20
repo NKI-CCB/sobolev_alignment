@@ -5,7 +5,7 @@ with open("README.md") as fh:
 
 setuptools.setup(
     name="sobolev_alignment",
-    version="0.2.1",
+    version="0.4.1",
     author="Soufiane Mourragui <soufiane.mourragui@gmail.com>, ",
     author_email="soufiane.mourragui@gmail.com",
     description="SOBOLEV ALIGNMENT",

@@ -25,6 +25,7 @@ dependencies = [
     "session-info",
     "torch",
     "numpy",
+    "cython",
     "scipy",
     "pandas",
     "matplotlib",

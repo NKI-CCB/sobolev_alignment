@@ -33,7 +33,7 @@ dependencies = [
     "scvi-tools",
     "scanpy",
     "hyperopt",
-    "falkon @ git+https://github.com/FalkonML/falkon"
+    "mock"
 ]
 
 [project.optional-dependencies]

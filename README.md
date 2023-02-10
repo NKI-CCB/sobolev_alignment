@@ -40,7 +40,7 @@ pip install sobolev_alignment
 
 ## Workflow presentation
 
-![alt text](https://github.com/NKI-CCB/sobolev_alignment/workflow.pdf)
+![Sobolev Alignment workflow](https://github.com/NKI-CCB/sobolev_alignment/blob/main/workflow.pdf)
 
 ## Release notes
 

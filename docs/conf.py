@@ -6,6 +6,7 @@
 # -- Path setup --------------------------------------------------------------
 import sys
 from pathlib import Path
+from unittest import mock
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / "extensions"))
@@ -102,6 +103,16 @@ nitpick_ignore = [
     # you can add an exception to this list.
     #     ("py:class", "igraph.Graph"),
 ]
+
+# -- MOCKS -----------------------------------------------------
+# Mocks some packages due to issues in installation
+# SM: must be resolved when Falkon is put on PyPI
+
+
+MOCK_MODULES = ["falkon"]
+
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
 
 
 def setup(app):

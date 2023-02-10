@@ -22,7 +22,7 @@ Python installed, we recommend installing [Mambaforge](https://github.com/conda-
 
 For the moment, no PyPI implementation is available. Falkon must be installed prior to installing Sobolev Alignment. The installation notice for Falkon is available on the [FalkonML documentation](https://falkonml.github.io/falkon/install.html).
 
-Once Falkon has been installed, the following command will automatically sobolev_alignment, alongside the remaining dependencies (i.e., scvi-tools):
+Once Falkon has been installed, the following command will automatically install sobolev_alignment, alongside the remaining dependencies (i.e., scvi-tools):
 
 ```bash
 pip install git+https://github.com/saroudant/sobolev_alignment.git@main
@@ -52,7 +52,7 @@ For questions and help requests, you can reach out at the following e-mail addre
 
 ## Citation
 
-> [Identifying commonalities between cell lines and tumors at the single cell level using Sobolev Alignment of deep generative models, Mourragui et al, 2022, Biorxiv][https://www.biorxiv.org/content/10.1101/2022.03.08.483431v1]
+> [Identifying commonalities between cell lines and tumors at the single cell level using Sobolev Alignment of deep generative models, Mourragui et al, 2022, Biorxiv](https://www.biorxiv.org/content/10.1101/2022.03.08.483431v1)
 
 [scverse-discourse]: https://discourse.scverse.org/
 [issue-tracker]: https://github.com/saroudant/sobolev_alignment/issues

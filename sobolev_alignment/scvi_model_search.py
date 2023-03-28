@@ -11,8 +11,8 @@ import pandas as pd
 import scvi
 from anndata import AnnData
 from hyperopt import STATUS_FAIL, STATUS_OK, Trials, fmin, hp, tpe
-from sklearn.model_selection import train_test_split
 from pytorch_lightning.utilities.exceptions import MisconfigurationException
+from sklearn.model_selection import train_test_split
 
 from ._scvi_default_params import SCVI_MODEL_PARAMS, SCVI_PLAN_PARAMS, SCVI_TRAIN_PARAMS
 

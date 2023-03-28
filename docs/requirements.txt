@@ -16,8 +16,6 @@ pdoc==12.3.0
 pybtex-docutils==1.0.2
 myst-nb==0.17.1
 myst-parser==0.18.1
-torch==1.13.1
-torchaudio==0.13.0
+torch==1.11.0
 torchmetrics==0.11.0
-torchvision==0.14.0
 git+https://github.com/NKI-CCB/sobolev_alignment

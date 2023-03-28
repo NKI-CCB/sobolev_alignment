@@ -181,6 +181,7 @@ def make_objective_function(train_data_an, test_data_an, batch_key=None, model=s
             results_dict = {"status": STATUS_FAIL, "loss": np.iinfo(np.uint64).max}
             results_dict.update(params)
         except MisconfigurationException:
+            # Observed here with incompatibility with ReduceLROnPlateau
             results_dict = {"status": STATUS_FAIL, "loss": np.iinfo(np.uint64).max}
             results_dict.update(params)
 

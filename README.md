@@ -2,6 +2,7 @@
 
 [![Tests][badge-tests]][link-tests]
 [![Documentation][badge-docs]][link-docs]
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/NKI-CCB/sobolev_alignment/main.svg)](https://results.pre-commit.ci/latest/github/NKI-CCB/sobolev_alignment/main)
 
 [badge-tests]: https://img.shields.io/github/actions/workflow/status/saroudant/sobolev_alignment/test.yaml?branch=main
 [link-tests]: https://github.com/saroudant/sobolev_alignment/actions/workflows/test.yml

@@ -329,7 +329,6 @@ class SobolevAlignment:
         frob_norm_source: bool = False,
         lib_size_norm: bool = False,
     ):
-
         if n_krr_clfs == 1:
             self.approximate_krr_regressions_[data_source] = self._train_one_krr(
                 data_source=data_source,
@@ -702,7 +701,6 @@ class SobolevAlignment:
         unit_std: bool = False,
         frob_norm_source: bool = False,
     ):
-
         # Save embedding
         if save_mmap is not None and type(save_mmap) == str:
             self._save_mmap = save_mmap

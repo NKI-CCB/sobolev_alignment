@@ -194,10 +194,6 @@ def make_objective_function(train_data_an, test_data_an, batch_key=None, model=s
 def split_dataset(data_an, test_size=0.1):
     """Split between training and testing"""
     train_data_df, test_data_df = train_test_split(data_an.to_df(), test_size=test_size)
-    train_data_an = data_an[
-        train_data_df.index,
-    ]
-    test_data_an = data_an[
-        test_data_df.index,
-    ]
+    train_data_an = data_an[train_data_df.index,]
+    test_data_an = data_an[test_data_df.index,]
     return train_data_an, test_data_an

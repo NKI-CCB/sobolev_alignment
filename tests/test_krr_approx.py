@@ -176,7 +176,6 @@ class TestKRRApprox:
         assert pearson_corr[0] > pearson_threshold
 
     def test_ridge_coef_sklearn_fit(self, fit_sklearn_laplacian_ridge, input, valid_input):
-
         pred_reconstruct = fit_sklearn_laplacian_ridge.kernel_(
             valid_input, input[fit_sklearn_laplacian_ridge.ridge_samples_idx_, :]
         )
@@ -186,7 +185,6 @@ class TestKRRApprox:
         )
 
     def test_ridge_coef_falkon_fit(self, fit_falkon_laplacian_ridge, input, valid_input):
-
         pred_reconstruct = fit_falkon_laplacian_ridge.kernel_(valid_input, fit_falkon_laplacian_ridge.anchors())
         pred_reconstruct = pred_reconstruct.matmul(fit_falkon_laplacian_ridge.sample_weights_)
         np.testing.assert_array_almost_equal(

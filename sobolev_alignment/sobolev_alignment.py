@@ -526,7 +526,7 @@ class SobolevAlignment:
             Number of artificial samples to produce for source and for target.
 
         Returns
-        ----------
+        -------
         artificial_data: dict
             Dictionary containing the generated data for both source and target
         """
@@ -831,7 +831,7 @@ class SobolevAlignment:
             By default, return a DataFrame.
 
         Returns
-        ----------
+        -------
         interpolated_proj_df: pd.DataFrame or sc.AnnData
             DataFrame or AnnData of concatenated source and target samples after projection on consensus features.
         """
@@ -951,7 +951,7 @@ class SobolevAlignment:
             Proportion of samples (cells) to be taken inside the test data.
 
         Returns
-        ----------
+        -------
             SobolevAlignment instance.
         """
         data = {"source": X_source, "target": X_target}
@@ -1004,7 +1004,7 @@ class SobolevAlignment:
             source or target models are aligned to themselves.
 
         Returns
-        ----------
+        -------
             SobolevAlignment instance.
         """
         # Log input if required

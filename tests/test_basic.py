@@ -1,5 +1,4 @@
 import pytest
-
 import sobolev_alignment
 
 

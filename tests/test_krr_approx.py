@@ -2,7 +2,6 @@ import numpy as np
 import pytest
 import scipy
 import torch
-
 from sobolev_alignment import KRRApprox
 
 n_samples = 2000

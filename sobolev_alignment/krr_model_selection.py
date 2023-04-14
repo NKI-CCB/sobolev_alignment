@@ -128,7 +128,7 @@ def model_selection_nu(
             "$".join([f"{e}:{f}" for e, f in krr_params["kernel_params"].items()]),
         )
 
-        sobolev_alignment_clf.krr_params = {"source": krr_params, "target": krr_params}
+        sobolev_alignment_clf.krr_params = {"source": deepcopy(krr_params), "target": deepcopy(krr_params)}
 
         print("\t START %s" % (param_id), flush=True)
         sobolev_alignment_clf.fit(

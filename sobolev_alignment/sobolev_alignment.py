@@ -212,7 +212,7 @@ class SobolevAlignment:
             if "model" not in self.scvi_params[x]:
                 self.scvi_params[x]["model"] = {}
             if "n_latent" not in self.scvi_params[x]["model"]:
-                self.scvi_params[x]["model"]["latent"] = 10
+                self.scvi_params[x]["model"]["n_latent"] = 10
 
         # KRR params
         self.krr_params = {
@@ -526,7 +526,7 @@ class SobolevAlignment:
             Number of artificial samples to produce for source and for target.
 
         Returns
-        -------
+        ----------
         artificial_data: dict
             Dictionary containing the generated data for both source and target
         """
@@ -831,7 +831,7 @@ class SobolevAlignment:
             By default, return a DataFrame.
 
         Returns
-        -------
+        ----------
         interpolated_proj_df: pd.DataFrame or sc.AnnData
             DataFrame or AnnData of concatenated source and target samples after projection on consensus features.
         """
@@ -951,7 +951,7 @@ class SobolevAlignment:
             Proportion of samples (cells) to be taken inside the test data.
 
         Returns
-        -------
+        ----------
             SobolevAlignment instance.
         """
         data = {"source": X_source, "target": X_target}
@@ -1004,7 +1004,7 @@ class SobolevAlignment:
             source or target models are aligned to themselves.
 
         Returns
-        -------
+        ----------
             SobolevAlignment instance.
         """
         # Log input if required
@@ -1033,9 +1033,10 @@ class SobolevAlignment:
         print("OPTIMAL NU: %1.2f" % (optimal_krr_nu))
 
         # Select penalization
+        self.penalization_principal_angles_df_ = {}
         for data_source in ["source", "target"]:
             self.krr_params[data_source]["kernel_params"] = {"sigma": sigma, "nu": optimal_krr_nu}
-            penalization_principal_angles_df = model_alignment_penalization(
+            self.penalization_principal_angles_df_[data_source] = model_alignment_penalization(
                 X_data=X_source if data_source == "source" else X_target,
                 data_source=data_source,
                 sobolev_alignment_clf=self,
@@ -1044,18 +1045,21 @@ class SobolevAlignment:
                 M=M,
             )
 
-            penalization_principal_angles_df = (
-                pd.DataFrame(penalization_principal_angles_df).iloc[:1] > same_model_alignment_thresh
+            self.penalization_principal_angles_df_[data_source] = (
+                pd.DataFrame(self.penalization_principal_angles_df_[data_source]).iloc[:1] > same_model_alignment_thresh
             ).T
-            try:
-                self.krr_params[data_source]["penalization"] = float(
-                    re.findall(
-                        r"penalization_([0-9.e\-]*)",
-                        penalization_principal_angles_df.loc[penalization_principal_angles_df[0], 0].index[0],
-                    )[0]
-                )
-            except ValueError:
+
+            pen = re.findall(
+                r"penalization_([0-9.e\-]*)",
+                self.penalization_principal_angles_df_[data_source]
+                .loc[self.penalization_principal_angles_df_[data_source][0], 0]
+                .index[0],
+            )
+            if len(pen) == 0:
                 self.krr_params[data_source]["penalization"] = 1e3
+            else:
+                self.krr_params[data_source]["penalization"] = float(pen[0])
+            del pen
 
             self.krr_params[data_source]["M"] = M
 

@@ -1,3 +1,9 @@
+"""
+Compute interpolated features.
+
+@author: Soufiane Mourragui
+"""
+
 import numpy as np
 import pandas as pd
 import scipy

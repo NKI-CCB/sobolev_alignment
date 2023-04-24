@@ -1,11 +1,12 @@
 """
-<h2>Sobolev Alignment</h2>
+Sobolev Alignment.
 
 @author: Soufiane Mourragui
 
 References
 ----------
-Mourragui et al, Identifying commonalities between cell lines and tumors at the single cell level using Sobolev Alignment of deep generative models, Biorxiv, 2022.
+Mourragui et al, Identifying commonalities between cell lines and tumors at the single cell level using
+Sobolev Alignment of deep generative models, Biorxiv, 2022.
 Lopez et al, Deep generative modeling for single-cell transcriptomics, Nature Methods, 2018.
 Meanti et al, Kernel methods through the roof: handling billions of points efficiently, NeurIPS, 2020.
 """
@@ -45,7 +46,7 @@ DEFAULT_LIB_SIZE = 10**3
 
 class SobolevAlignment:
     """
-    Sobolev Alignment implementation
+    Sobolev Alignment implementation.
 
     Main class for Sobolev Alignment, which wraps all the different operations presented in Sobolev Alignment procedure:
     - Model selection (scVI and KRR)
@@ -66,8 +67,8 @@ class SobolevAlignment:
         target_scvi_params: dict = None,
         source_krr_params: dict = None,
         target_krr_params: dict = None,
-        n_artificial_samples: int = int(10e5),
-        n_samples_per_sample_batch: int = 10**6,
+        n_artificial_samples: int = 10**5,
+        n_samples_per_sample_batch: int = 10**5,
         frac_save_artificial: float = 0.1,
         save_mmap: str = None,
         log_input: bool = True,
@@ -237,7 +238,7 @@ class SobolevAlignment:
         sample_artificial: bool = True,
     ):
         """
-        Runs the complete Sobolev Alignment workflow between a source (e.g. cell line) and a target (e.g. tumor) dataset.
+        Run complete Sobolev Alignment workflow between a source (e.g. cell line) and a target (e.g. tumor) dataset.
 
         Source and target data should be passed as AnnData and potential batch names
         (source_batch_name, target_batch_name) should be part of the "obs" element
@@ -593,7 +594,7 @@ class SobolevAlignment:
         }
 
     def _check_same_kernel(self):
-        """Same kernel has to be used for source and kernel KRR."""
+        """Verify that same kernel is used for source and kernel KRR."""
         if "kernel" in self.krr_params["source"] or "kernel" in self.krr_params["target"]:
             assert self.krr_params["source"]["kernel"] == self.krr_params["target"]["kernel"]
         if "kernel_params" in self.krr_params["source"] or "kernel_params" in self.krr_params["target"]:
@@ -797,9 +798,12 @@ class SobolevAlignment:
 
     def _compute_principal_vectors(self, all_PVs=False):
         """
-        All_PVs indicate whether the data source with the most PVs should be reduced to the number of PVs of the smallest data-source.
+        Compute principal vectors by SVD of cosine similarity.
 
-        Example: source has 10 factors, target 13. all_PVs=True would yield 13 target PVs, all_PVs=False would yield 10.
+        All_PVs indicate whether the data source with the most PVs should be reduced to the
+        number of PVs of the smallest data-source.
+        Example: source has 10 factors, target 13. all_PVs=True would yield 13 target PVs,
+        all_PVs=False would yield 10.
         """
         cosine_svd = np.linalg.svd(self.cosine_sim, full_matrices=all_PVs)
         self.principal_angles = cosine_svd[1]
@@ -815,8 +819,8 @@ class SobolevAlignment:
         """
         Project data on interpolated consensus features.
 
-        Project the data on interpolated features, i.e., a linear combination of source and target SPVs which best balances the effect of source and target
-        data.
+        Project the data on interpolated features, i.e., a linear combination of source and target SPVs which
+        best balances the effect of source and target data.
 
         Parameters
         ----------
@@ -825,10 +829,11 @@ class SobolevAlignment:
         n_similar_pv: int
             Number of top SPVs to project the data on.
         fit: bool, default to True
-            Whether the interpolated times must be computed. If False, will use previously computed times, but will return an error if not previously fitted.
+            Whether the interpolated times must be computed. If False, will use previously computed times,
+            but will return an error if not previously fitted.
         return_anndata: bool, default to False
-            Whether the projected consensus features must be formatted as an AnnData with overlapping indices in obs. This allows downstream analysis.
-            By default, return a DataFrame.
+            Whether the projected consensus features must be formatted as an AnnData with overlapping
+            indices in obs. This allows downstream analysis. By default, return a DataFrame.
 
         Returns
         -------
@@ -1066,7 +1071,7 @@ class SobolevAlignment:
         return self.krr_params
 
     def save(self, folder: str = ".", with_krr: bool = True, with_model: bool = True):
-        """Save Sobolev Alignment model"""
+        """Save Sobolev Alignment model."""
         if not os.path.exists(folder) and not os.path.isdir(folder):
             os.mkdir(folder)
 
@@ -1217,7 +1222,7 @@ class SobolevAlignment:
                 plt.show()
 
     def plot_cosine_similarity(self, folder: str = ".", absolute_cos: bool = False):
-        """Plot cosine similarity"""
+        """Plot cosine similarity."""
         if absolute_cos:
             sns.heatmap(np.abs(self.cosine_sim), cmap="seismic_r", center=0)
         else:
@@ -1330,17 +1335,18 @@ class SobolevAlignment:
         """
         Launch feature analysis for a trained scVI model.
 
-        Computes the gene contributions (feature weights) associated with the KRRs which approximate the latent factors and the SPVs.
-        Technically, given the kernel machine which approximates a latent factor (KRR), this method computes the weights associated
-        with the orthonormal basis in the Gaussian-kernel associated Sobolev space.
+        Computes the gene contributions (feature weights) associated with the KRRs which approximate the
+        latent factors and the SPVs. Technically, given the kernel machine which approximates a latent factor
+        (KRR), this method computes the weights associated with the orthonormal basis in the Gaussian-kernel
+        associated Sobolev space.
 
         Parameters
         ----------
         max_order: int, default to 1
             Order of the features to compute. 1 corresponds to linear features (genes), two to interaction terms.
         gene_names: list of str, default to None
-            Names of the genes passed as input to Sobolev Alignment. <b>WARNING</b> Must be in the same order as the input to
-            SobolevAlignment.fit
+            Names of the genes passed as input to Sobolev Alignment. <b>WARNING</b> Must be in the same order as
+            the input to SobolevAlignment.fit
         """
         # Make kernel parameter
         if (
@@ -1405,7 +1411,7 @@ class SobolevAlignment:
         }
 
     def sample_random_vector_(self, data_source, K):
-        """Sample a vector randomly for either source or target"""
+        """Sample a vector randomly for either source or target."""
         n_samples = self.approximate_krr_regressions_[data_source].anchors().shape[0]
         n_factors = self.approximate_krr_regressions_[data_source].anchors().shape[1]
 
@@ -1435,7 +1441,7 @@ class SobolevAlignment:
         return coefficients
 
     def compute_random_direction_(self, K_X, K_Y, K_XY):
-        """Sample randomly two vectors and compute cosine similarity"""
+        """Sample randomly two vectors and compute cosine similarity."""
         # Random samples
         perm_source_sample_coef = self.sample_random_vector_("source", K_X)
         perm_target_sample_coef = self.sample_random_vector_("target", K_Y)

@@ -1,5 +1,5 @@
 """
-GENERATE ARTIFICIAL SAMPLE
+Generate artificial samples.
 
 @author: Soufiane Mourragui
 
@@ -26,7 +26,7 @@ def generate_samples(
     return_dist: bool = False,
 ):
     """
-    Generates artificial gene expression profiles.
+    Generate artificial gene expression profiles.
 
     Note to developers: this method has been designed to be used with scvi-tools classes. Other VAE
     implementations may break here.
@@ -111,7 +111,7 @@ def parallel_generate_samples(
     n_jobs=1,
 ):
     """
-    Generates artificial gene expression profiles.
+    Generate artificial gene expression profiles.
 
     Wrapper of parallelize generate_samples, running several threads in parallel.
     <b>Note to developers</b>: this function needs to be changed if applied to other VAE model

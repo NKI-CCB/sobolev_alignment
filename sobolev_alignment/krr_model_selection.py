@@ -1,5 +1,5 @@
 """
-<h2>Kernel Ridge Regression (KRR) model search</h2>
+Kernel Ridge Regression (KRR) model search.
 
 @author: Soufiane Mourragui
 

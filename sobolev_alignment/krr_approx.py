@@ -255,7 +255,7 @@ class KRRApprox:
             self._process_coef_ridge_falkon()
 
     def _process_coef_ridge_sklearn(self):
-        """Save and process (i.e. transform to torch.Tensor) the coefficients obtained after kernel ridge regression with scikit-learn implementation."""
+        """Save and transform to torch.Tensor KRR coefficients from scikit-learn implementation."""
         self.sample_weights_ = torch.Tensor(self.ridge_clf_.dual_coef_)
         self.ridge_samples_idx_ = np.arange(self.training_data_.shape[0])
 

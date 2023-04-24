@@ -1,4 +1,11 @@
-"""FEATURE_ANALYSIS"""
+"""
+Feature analysis.
+
+@author: Soufiane Mourragui
+
+This modules contains all the codes used in the Taylor expansion for the Gaussian/Matern
+kernel.
+"""
 
 import gc
 import logging
@@ -24,7 +31,8 @@ def higher_order_contribution(
 
     Compute the features corresponding to the Taylor expansion of the kernel, i.e. $x_j exp^{-\gamma xx^T}$ for
     linear features. Returns a sparse pandas DataFrame containing all the features (columns) by samples (rows).
-    We here critically rely on the sparsity of the data-matrix to speed up computations. The current implementation is relevant in two cases:
+    We here critically rely on the sparsity of the data-matrix to speed up computations. The current implementation
+    is relevant in two cases:
     -When dimensionality is small
     -When data is sparse.
 
@@ -54,8 +62,9 @@ def higher_order_contribution(
         could lead to crash.
 
     return_matrix: bool, default to False
-        If True, then returns simply the feature-matrix without feature-naming. In cases when feature names are
-        not relevant (e.g. computing the proportion of non-linearities), return_matrix=True can help speed-up the process.
+        If True, then returns simply the feature-matrix without feature-naming. In cases when feature names
+        are not relevant (e.g. computing the proportion of non-linearities), return_matrix=True can help
+        speed-up the process.
 
     Returns
     -------
@@ -96,7 +105,7 @@ def higher_order_contribution(
 
 
 def _combination_to_idx(idx, p):
-    """Transforms a combination (tuple of feature idx) into an indicative function.
+    r"""Transform a combination (tuple of feature idx) into an indicative function.
 
     Parameters
     ----------
@@ -118,7 +127,7 @@ def _combination_to_idx(idx, p):
 
 
 def basis(x, k, gamma):
-    """Computed the basis function for a single gene, except offset term.
+    r"""Compute the basis function for a single gene, except offset term.
 
     Parameters
     ----------

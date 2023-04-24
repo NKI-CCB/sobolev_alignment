@@ -1,3 +1,10 @@
+"""
+Kernel operations.
+
+@author: Soufiane Mourragui
+
+Custom scripts for specific matrix operations.
+"""
 import numpy as np
 
 

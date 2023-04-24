@@ -24,10 +24,13 @@ from pickle import dump, load
 import numpy as np
 import torch
 
-# Falkon import
-from falkon import Falkon
-from falkon.kernels import GaussianKernel, LaplacianKernel, MaternKernel
-from falkon.options import FalkonOptions
+# Falkon import if loaded
+try:
+    from falkon import Falkon
+    from falkon.kernels import GaussianKernel, LaplacianKernel, MaternKernel
+    from falkon.options import FalkonOptions
+except ImportError:
+    print('FALKON NOT INSTALLED, OR NOT IMPORTED. USING FALKON WOULD RESULT IN BETTER PERFORMANCE.', flush=True)
 from sklearn.gaussian_process.kernels import Matern, PairwiseKernel
 from sklearn.kernel_ridge import KernelRidge
 

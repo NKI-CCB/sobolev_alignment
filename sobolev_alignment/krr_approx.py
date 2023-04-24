@@ -1,4 +1,5 @@
-"""Encoder approximation by Kernel Ridge Regression
+"""
+Encoder approximation by Kernel Ridge Regression.
 
 @author: Soufiane Mourragui
 
@@ -30,7 +31,7 @@ try:
     from falkon.kernels import GaussianKernel, LaplacianKernel, MaternKernel
     from falkon.options import FalkonOptions
 except ImportError:
-    print('FALKON NOT INSTALLED, OR NOT IMPORTED. USING FALKON WOULD RESULT IN BETTER PERFORMANCE.', flush=True)
+    print("FALKON NOT INSTALLED, OR NOT IMPORTED. USING FALKON WOULD RESULT IN BETTER PERFORMANCE.", flush=True)
 from sklearn.gaussian_process.kernels import Matern, PairwiseKernel
 from sklearn.kernel_ridge import KernelRidge
 
@@ -221,7 +222,7 @@ class KRRApprox:
 
     def _setup_sklearn_clf(self):
         """
-        Set up the regression model using scikit-learn implementation
+        Set up the regression model using scikit-learn implementation.
 
         Returns
         -------
@@ -232,7 +233,7 @@ class KRRApprox:
 
     def _setup_falkon_clf(self):
         """
-        Set up the regression model using Falkon implementation
+        Set up the regression model using Falkon implementation.
 
         Returns
         -------
@@ -268,19 +269,21 @@ class KRRApprox:
 
     def transform(self, X: torch.Tensor):
         """
-        Apply the trained KRR models to a given data. This corresponds to the out-of-sample extension.
+        Apply the trained KRR models to a given data.
+
+        This corresponds to the out-of-sample extension.
 
         Parameters
         ----------
         X: torch.Tensor
             Tensor containing gene expression profiles with samples in the rows.
-            <b>WARNING:</b> genes (features) need to be following the same order as the training
-            data.
+            <b>WARNING:</b> genes (features) need to be following the same order
+            as the training data.
 
         Returns
         -------
-        torch.Tensor with predicted values for each of the encoding functions. Samples are in the
-        rows and encoding functions (embedding) in the columns.
+        torch.Tensor with predicted values for each of the encoding functions.
+        Samples are in the rows and encoding functions (embedding) in the columns.
         """
         if self.mean_center or self.unit_std:
             X = torch.Tensor(self.pre_process_.transform(X))
@@ -294,7 +297,7 @@ class KRRApprox:
 
     def save(self, folder: str = "."):
         """
-        Save the instance
+        Save the instance.
 
         Parameters
         ----------
@@ -327,8 +330,8 @@ class KRRApprox:
         torch.save(torch.Tensor(self.anchors()), open("%s/sample_anchors.pt" % (folder), "wb"))
         torch.save(torch.Tensor(self.sample_weights_), open("%s/sample_weights.pt" % (folder), "wb"))
 
-        # Save weights and anchors as csv. Longer to load, but compatible with all platforms.
-        # NOTE: was created to insure higher compatibility than torch saving option.
+        # Save weights and anchors as csv.
+        # Longer to load, but compatible with all platforms.
         np.savetxt("%s/sample_weights.csv" % (folder), self.sample_weights_.detach().numpy())
         np.savetxt("%s/sample_anchors.csv" % (folder), self.anchors().detach().numpy())
 
@@ -357,7 +360,6 @@ class KRRApprox:
         krr_approx_clf.kernel_ = params["kernel"]
 
         # Load sample weights and anchors.
-        # NOTE: we use the torch option. In case of incompatibility, one could use the csv option.
         krr_approx_clf.sample_weights_ = torch.load(open("%s/sample_weights.pt" % (folder), "rb"))
         krr_approx_clf.training_data_ = torch.load(open("%s/sample_anchors.pt" % (folder), "rb"))
 

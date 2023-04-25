@@ -249,7 +249,9 @@ footer {
     top: 0 !important;
     background: #fff;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
-    transition: margin-left 0.25s ease 0s, opacity 0.25s ease 0s,
+    transition:
+        margin-left 0.25s ease 0s,
+        opacity 0.25s ease 0s,
         visibility 0.25s ease 0s;
     overflow-y: unset;
     height: 100vh;
@@ -355,7 +357,9 @@ nav.bd-links p.caption {
     padding: 0 !important;
     right: -1em;
     height: auto;
-    transition: margin-right 0.25s ease 0s, opacity 0.25s ease 0s,
+    transition:
+        margin-right 0.25s ease 0s,
+        opacity 0.25s ease 0s,
         visibility 0.25s ease 0s;
 }
 .bd-toc .toc-entry a,
@@ -382,7 +386,9 @@ nav.bd-links p.caption {
 .bd-toc nav {
     opacity: 0;
     max-height: 0;
-    transition: opacity 0.2s ease, max-height 0.7s ease;
+    transition:
+        opacity 0.2s ease,
+        max-height 0.7s ease;
     overflow-y: hidden;
     background: #fff;
 }
@@ -483,7 +489,10 @@ label.overlay {
     opacity: 0;
     position: fixed;
     top: 0;
-    transition: width 0ms, height 0ms, opacity 0.25s ease-out;
+    transition:
+        width 0ms,
+        height 0ms,
+        opacity 0.25s ease-out;
     width: 0;
 }
 label.overlay.overlay-navbar {
@@ -601,7 +610,8 @@ span.highlighted {
 }
 .admonition {
     border-radius: 0.4em;
-    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
+    box-shadow:
+        0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
         0 0 0.0625rem rgba(0, 0, 0, 0.1);
 }
 .admonition.seealso {

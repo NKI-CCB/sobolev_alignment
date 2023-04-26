@@ -24,6 +24,7 @@ setuptools.setup(
         "scvi-tools==0.20.0",
         "scanpy",
         "hyperopt",
+        "codecov"
     ],
     python_requires=">=3.8",
     classifiers=(

@@ -34,7 +34,8 @@ dependencies = [
     "scvi-tools",
     "scanpy",
     "hyperopt",
-    "mock"
+    "mock",
+    "codecov"
 ]
 
 [project.optional-dependencies]

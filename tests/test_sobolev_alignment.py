@@ -14,6 +14,14 @@ frac_save_artificial = 0.1
 
 
 @pytest.fixture(scope="module")
+def falkon_import():
+    try:
+        return True
+    except ImportError:
+        return False
+
+
+@pytest.fixture(scope="module")
 def source_data():
     poisson_coef = np.random.randint(1, 25, size=n_genes)
     return np.concatenate([np.random.poisson(lam=l, size=n_samples).reshape(-1, 1) for l in poisson_coef], axis=1)
@@ -87,20 +95,38 @@ def target_scvi_params():
 
 class TestSobolevAlignment:
     @pytest.fixture(scope="class")
-    def sobolev_alignment_raw(self, source_scvi_params, target_scvi_params):
+    def sobolev_alignment_raw(self, falkon_import, source_scvi_params, target_scvi_params):
+        if falkon_import:
+            source_krr_params = {"method": "falkon"}
+            target_krr_params = {"method": "falkon"}
+        else:
+            source_krr_params = {"method": "sklearn"}
+            target_krr_params = {"method": "sklearn"}
+
         return SobolevAlignment(
             source_scvi_params=source_scvi_params,
             target_scvi_params=target_scvi_params,
+            source_krr_params=source_krr_params,
+            target_krr_params=target_krr_params,
             source_batch_name=None,
             target_batch_name=None,
             no_posterior_collapse=False,
         )
 
     @pytest.fixture(scope="class")
-    def sobolev_alignment_batch(self, source_scvi_params, target_scvi_params):
+    def sobolev_alignment_batch(self, falkon_import, source_scvi_params, target_scvi_params):
+        if falkon_import:
+            source_krr_params = {"method": "falkon"}
+            target_krr_params = {"method": "falkon"}
+        else:
+            source_krr_params = {"method": "sklearn"}
+            target_krr_params = {"method": "sklearn"}
+
         return SobolevAlignment(
             source_scvi_params=source_scvi_params,
             target_scvi_params=target_scvi_params,
+            source_krr_params=source_krr_params,
+            target_krr_params=target_krr_params,
             source_batch_name="batch",
             target_batch_name="batch",
             n_artificial_samples=n_artificial_samples,

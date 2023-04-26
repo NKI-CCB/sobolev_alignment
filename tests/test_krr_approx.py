@@ -14,6 +14,14 @@ M = 500
 
 
 @pytest.fixture(scope="module")
+def falkon_import():
+    try:
+        return True
+    except ImportError:
+        return False
+
+
+@pytest.fixture(scope="module")
 def input():
     return torch.normal(0, 1, size=(n_samples, n_genes))
 
@@ -81,41 +89,60 @@ class TestKRRApprox:
     ###
 
     @pytest.fixture(scope="class")
-    def falkon_rbf_KRR(self):
-        return KRRApprox(
-            method="falkon", kernel="rbf", kernel_params={"sigma": np.sqrt(2 * n_genes)}, penalization=penalization, M=M
-        )
+    def falkon_rbf_KRR(self, falkon_import):
+        if falkon_import:
+            return KRRApprox(
+                method="falkon",
+                kernel="rbf",
+                kernel_params={"sigma": np.sqrt(2 * n_genes)},
+                penalization=penalization,
+                M=M,
+            )
+        else:
+            return None
 
     @pytest.fixture(scope="class")
-    def falkon_matern_KRR(self):
-        return KRRApprox(
-            method="falkon",
-            kernel="matern",
-            kernel_params={"sigma": np.sqrt(2 * n_genes), "nu": 1.5},
-            penalization=penalization,
-            M=M,
-        )
+    def falkon_matern_KRR(self, falkon_import):
+        if falkon_import:
+            return KRRApprox(
+                method="falkon",
+                kernel="matern",
+                kernel_params={"sigma": np.sqrt(2 * n_genes), "nu": 1.5},
+                penalization=penalization,
+                M=M,
+            )
+        else:
+            return None
 
     @pytest.fixture(scope="class")
-    def falkon_laplacian_KRR(self):
-        return KRRApprox(
-            method="falkon",
-            kernel="laplacian",
-            kernel_params={"sigma": np.sqrt(2 * n_genes)},
-            penalization=penalization,
-            M=M,
-        )
+    def falkon_laplacian_KRR(self, falkon_import):
+        if falkon_import:
+            return KRRApprox(
+                method="falkon",
+                kernel="laplacian",
+                kernel_params={"sigma": np.sqrt(2 * n_genes)},
+                penalization=penalization,
+                M=M,
+            )
+        else:
+            return None
 
     @pytest.fixture(scope="class")
     def fit_falkon_rbf_ridge(self, falkon_rbf_KRR, input, embedding):
+        if falkon_rbf_KRR is None:
+            return None
         return falkon_rbf_KRR.fit(input, embedding)
 
     @pytest.fixture(scope="class")
     def fit_falkon_laplacian_ridge(self, falkon_laplacian_KRR, input, embedding):
+        if falkon_laplacian_KRR is None:
+            return None
         return falkon_laplacian_KRR.fit(input, embedding)
 
     @pytest.fixture(scope="class")
     def fit_falkon_matern_ridge(self, falkon_matern_KRR, input, embedding):
+        if falkon_matern_KRR is None:
+            return None
         return falkon_matern_KRR.fit(input, embedding)
 
     ###
@@ -131,9 +158,10 @@ class TestKRRApprox:
             KRRApprox(kernel=kernel, method="sklearn")
         return True
 
-    def test_all_falkon_kernels(self):
-        for kernel in KRRApprox.falkon_kernel:
-            KRRApprox(kernel=kernel, method="falkon")
+    def test_all_falkon_kernels(self, falkon_import):
+        if falkon_import:
+            for kernel in KRRApprox.falkon_kernel:
+                KRRApprox(kernel=kernel, method="falkon")
         return True
 
     ###
@@ -160,32 +188,37 @@ class TestKRRApprox:
     ###
 
     def test_rbf_falkon_fit(self, fit_falkon_rbf_ridge, valid_input, valid_embedding):
-        pred = fit_falkon_rbf_ridge.transform(valid_input)
-        pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
-        assert pearson_corr[0] > pearson_threshold
+        if fit_falkon_rbf_ridge is not None:
+            pred = fit_falkon_rbf_ridge.transform(valid_input)
+            pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+            assert pearson_corr[0] > pearson_threshold
 
     def test_matern_falkon_fit(self, fit_falkon_matern_ridge, valid_input, valid_embedding):
-        pred = fit_falkon_matern_ridge.transform(valid_input)
-        pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
-        assert pearson_corr[0] > pearson_threshold
+        if fit_falkon_matern_ridge is not None:
+            pred = fit_falkon_matern_ridge.transform(valid_input)
+            pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+            assert pearson_corr[0] > pearson_threshold
 
     def test_laplacian_falkon_fit(self, fit_falkon_laplacian_ridge, valid_input, valid_embedding):
-        pred = fit_falkon_laplacian_ridge.transform(valid_input)
-        pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
-        assert pearson_corr[0] > pearson_threshold
+        if fit_falkon_laplacian_ridge is not None:
+            pred = fit_falkon_laplacian_ridge.transform(valid_input)
+            pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+            assert pearson_corr[0] > pearson_threshold
 
     def test_ridge_coef_sklearn_fit(self, fit_sklearn_laplacian_ridge, input, valid_input):
-        pred_reconstruct = fit_sklearn_laplacian_ridge.kernel_(
-            valid_input, input[fit_sklearn_laplacian_ridge.ridge_samples_idx_, :]
-        )
-        pred_reconstruct = pred_reconstruct.dot(fit_sklearn_laplacian_ridge.sample_weights_)
-        np.testing.assert_array_almost_equal(
-            pred_reconstruct, fit_sklearn_laplacian_ridge.transform(valid_input), decimal=3
-        )
+        if fit_sklearn_laplacian_ridge is not None:
+            pred_reconstruct = fit_sklearn_laplacian_ridge.kernel_(
+                valid_input, input[fit_sklearn_laplacian_ridge.ridge_samples_idx_, :]
+            )
+            pred_reconstruct = pred_reconstruct.dot(fit_sklearn_laplacian_ridge.sample_weights_)
+            np.testing.assert_array_almost_equal(
+                pred_reconstruct, fit_sklearn_laplacian_ridge.transform(valid_input), decimal=3
+            )
 
     def test_ridge_coef_falkon_fit(self, fit_falkon_laplacian_ridge, input, valid_input):
-        pred_reconstruct = fit_falkon_laplacian_ridge.kernel_(valid_input, fit_falkon_laplacian_ridge.anchors())
-        pred_reconstruct = pred_reconstruct.matmul(fit_falkon_laplacian_ridge.sample_weights_)
-        np.testing.assert_array_almost_equal(
-            pred_reconstruct, fit_falkon_laplacian_ridge.transform(valid_input), decimal=3
-        )
+        if fit_falkon_laplacian_ridge is not None:
+            pred_reconstruct = fit_falkon_laplacian_ridge.kernel_(valid_input, fit_falkon_laplacian_ridge.anchors())
+            pred_reconstruct = pred_reconstruct.matmul(fit_falkon_laplacian_ridge.sample_weights_)
+            np.testing.assert_array_almost_equal(
+                pred_reconstruct, fit_falkon_laplacian_ridge.transform(valid_input), decimal=3
+            )

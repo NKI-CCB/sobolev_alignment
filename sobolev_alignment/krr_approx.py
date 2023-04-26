@@ -30,7 +30,10 @@ try:
     from falkon import Falkon
     from falkon.kernels import GaussianKernel, LaplacianKernel, MaternKernel
     from falkon.options import FalkonOptions
+
+    FALKON_IMPORTED = True
 except ImportError:
+    FALKON_IMPORTED = False
     print("FALKON NOT INSTALLED, OR NOT IMPORTED. USING FALKON WOULD RESULT IN BETTER PERFORMANCE.", flush=True)
 from sklearn.gaussian_process.kernels import Matern, PairwiseKernel
 from sklearn.kernel_ridge import KernelRidge
@@ -58,10 +61,10 @@ class KRRApprox:
     }
 
     falkon_kernel = {
-        "rbf": GaussianKernel,
-        "gaussian": GaussianKernel,
-        "laplacian": LaplacianKernel,
-        "matern": MaternKernel,
+        "rbf": GaussianKernel if FALKON_IMPORTED else None,
+        "gaussian": GaussianKernel if FALKON_IMPORTED else None,
+        "laplacian": LaplacianKernel if FALKON_IMPORTED else None,
+        "matern": MaternKernel if FALKON_IMPORTED else None,
     }
 
     default_kernel_params = {
@@ -244,7 +247,7 @@ class KRRApprox:
             penalty=self.penalization,
             M=self.M,
             maxiter=self.maxiter,
-            options=FalkonOptions(**self.falkon_options),
+            options=FalkonOptions(**self.falkon_options) if FALKON_IMPORTED else None,
         )
         return True
 

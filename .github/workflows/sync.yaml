@@ -30,6 +30,7 @@ jobs:
                   cruft update --checkout ${{ steps.get-latest-tag.outputs.tag }} --skip-apply-ask --project-dir .
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v4
+              if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
               with:
                   commit-message: Automated template update from cookiecutter-scverse
                   branch: template-update

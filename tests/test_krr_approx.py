@@ -3,11 +3,12 @@ import pytest
 import scipy
 import torch
 from sobolev_alignment import KRRApprox
+from sobolev_alignment.krr_approx import FALKON_IMPORTED
 
-n_samples = 2000
 n_samples_valid = 50
 n_genes = 100
 n_latent = 7
+n_samples = 2000
 penalization = 0.0001
 pearson_threshold = 0.99
 M = 500
@@ -15,10 +16,7 @@ M = 500
 
 @pytest.fixture(scope="module")
 def falkon_import():
-    try:
-        return True
-    except ImportError:
-        return False
+    return FALKON_IMPORTED
 
 
 @pytest.fixture(scope="module")
@@ -160,6 +158,9 @@ class TestKRRApprox:
 
     def test_all_falkon_kernels(self, falkon_import):
         if falkon_import:
+            print(">>>>>>\n\n\n\n")
+            print(falkon_import)
+            print("\n\n\n<<<<<")
             for kernel in KRRApprox.falkon_kernel:
                 KRRApprox(kernel=kernel, method="falkon")
         return True

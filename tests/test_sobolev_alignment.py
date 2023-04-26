@@ -3,6 +3,7 @@ import pandas as pd
 import pytest
 from anndata import AnnData
 from sobolev_alignment import SobolevAlignment
+from sobolev_alignment.krr_approx import FALKON_IMPORTED
 
 n_samples = 500
 n_samples_valid = 50
@@ -15,10 +16,7 @@ frac_save_artificial = 0.1
 
 @pytest.fixture(scope="module")
 def falkon_import():
-    try:
-        return True
-    except ImportError:
-        return False
+    return FALKON_IMPORTED
 
 
 @pytest.fixture(scope="module")

@@ -21,15 +21,31 @@ Please refer to the [documentation][link-docs]. In particular, the
 You need to have Python 3.8 or newer installed on your system. If you don't have
 Python installed, we recommend installing [Mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
 
-For the moment, no PyPI implementation is available. Falkon must be installed prior to installing Sobolev Alignment. The installation notice for Falkon is available on the [FalkonML documentation](https://falkonml.github.io/falkon/install.html).
+For the moment, no PyPI implementation is available (coming soon). The installation can be done in two steps.
 
-Once Falkon has been installed, the following command will automatically install sobolev_alignment, alongside the remaining dependencies (i.e., scvi-tools):
+### 1. Install Sobolev Alignment
+
+You can install Sobolev Alignment and (almost) all dependencies using the following command:
 
 ```bash
 pip install git+https://github.com/saroudant/sobolev_alignment.git@main
 ```
 
-We are currently working on a PyPI release.
+The resulting package is ready to use, but will use scikit-learn instead of Falkon, resulting in largely sub-optimal performances.
+
+### 2. Install Falkon
+
+To employ large-scale GPU-accelerated kernel methods, we turn to Falkon. The installation notice for Falkon is available on the [FalkonML documentation](https://falkonml.github.io/falkon/install.html). The previous installation procedure has already taken care of the various dependencies required for Falkon (i.e., cython, scipy and torch.)
+
+## Frequent issues
+
+Due to incompatibilities between g++, gcc and cuda, the installation of FalkonML sometimes fails. The following elements can help alleviate potential issues:
+
+-   Prior to installing Falkon, re-install torch 1.11.
+-   Check compatibility between your cuda version and the one installed with torch.
+-   Using cxx-compiler=1.2.0 (available on conda-forge) is compatible with cuda 11.3.
+
+Please feel free to contact the development team by e-mail or by creating an issue.
 
 <!--
 1) Install the latest release of `sobolev_alignment` from `PyPI <https://pypi.org/project/sobolev_alignment/>`_:

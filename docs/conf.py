@@ -5,8 +5,11 @@
 
 # -- Path setup --------------------------------------------------------------
 import sys
+import os
 from pathlib import Path
 from unittest import mock
+
+sys.path.insert(0, os.path.abspath("../../sobolev_alignment/"))
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / "extensions"))
@@ -88,9 +91,9 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_book_theme"
-html_static_path = ["_static"]
-html_title = "sobolev_alignment"
+html_theme = "alabaster"
+# html_static_path = ["_static"]
+html_title = "Sobolev Alignment"
 
 html_theme_options = {
     "repository_url": "https://github.com/NKI-CCB/sobolev_alignment",

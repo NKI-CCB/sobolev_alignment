@@ -40,11 +40,30 @@ To employ large-scale GPU-accelerated kernel methods, we turn to Falkon. The ins
 
 ## Frequent issues
 
+### Issues with the compiler.
+
 Due to incompatibilities between g++, gcc and cuda, the installation of FalkonML sometimes fails. The following elements can help alleviate potential issues:
 
 -   Prior to installing Falkon, re-install torch 1.11.
 -   Check compatibility between your cuda version and the one installed with torch.
 -   Using cxx-compiler=1.2.0 (available on conda-forge) is compatible with cuda 11.3.
+
+### Issues with Jaxlib (MacOS)
+
+For Mac users, the jaxlib version installed from PyPI sometimes returns issues. We then advise to re-install jaxlib from condo, and subsequently re-install dcvi-tools:
+
+```bash
+mamba install jaxlib
+mamba install scvi-tools
+```
+
+### Incompatibilities with numba
+
+Errors are sometimes raised due to numba inconsistencies. The errors raised were due to clashes between different packages. Re-installing numba seem to have fixed the issues:
+
+```bash
+pip install numba --force-reinstall
+```
 
 Please feel free to contact the development team by e-mail or by creating an issue.
 

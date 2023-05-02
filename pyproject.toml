@@ -5,7 +5,7 @@ requires = ["hatchling"]
 
 [project]
 name = "sobolev_alignment"
-version = "0.4.1"
+version = "1.0.0"
 description = "Sobolev alignment of deep probabilistic models for comparing single cell profiles"
 readme = "README.md"
 requires-python = ">=3.8"

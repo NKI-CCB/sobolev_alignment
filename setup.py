@@ -5,13 +5,13 @@ with open("README.md") as fh:
 
 setuptools.setup(
     name="sobolev_alignment",
-    version="0.4.1",
+    version="1.0.0",
     author="Soufiane Mourragui <soufiane.mourragui@gmail.com>, ",
     author_email="soufiane.mourragui@gmail.com",
     description="SOBOLEV ALIGNMENT",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    # url="https://github.com/NKI-CCB/sobolev_alignment",
+    url="https://github.com/NKI-CCB/sobolev_alignment",
     packages=setuptools.find_packages(),
     install_requires=[
         "numpy",

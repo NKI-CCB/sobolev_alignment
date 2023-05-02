@@ -17,7 +17,7 @@ sys.path.insert(0, str(HERE / "extensions"))
 project = "Sobolev Alignment"
 copyright = "2023, Soufiane Mourragui"
 author = "Soufiane Mourragui"
-release = "0.4.1"
+release = "1.0.0"
 
 bibtex_bibfiles = []
 templates_path = ["_templates"]

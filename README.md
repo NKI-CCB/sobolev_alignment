@@ -22,14 +22,14 @@ Please refer to the [documentation][link-docs]. In particular, the
 You need to have Python 3.8 or newer installed on your system. If you don't have
 Python installed, we recommend installing [Mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
 
-For the moment, no PyPI implementation is available (coming soon). The installation can be done in two steps.
+The installation can be done in two steps.
 
 ### 1. Install Sobolev Alignment
 
 You can install Sobolev Alignment and (almost) all dependencies using the following command:
 
 ```bash
-pip install git+https://github.com/saroudant/sobolev_alignment.git@main
+pip install sobolev-alignment
 ```
 
 The resulting package is ready to use, but will use scikit-learn instead of Falkon, resulting in largely sub-optimal performances.

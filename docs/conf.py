@@ -5,11 +5,8 @@
 
 # -- Path setup --------------------------------------------------------------
 import sys
-import os
 from pathlib import Path
 from unittest import mock
-
-sys.path.insert(0, os.path.abspath("../../sobolev_alignment/"))
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / "extensions"))
@@ -95,10 +92,10 @@ html_theme = "alabaster"
 # html_static_path = ["_static"]
 html_title = "Sobolev Alignment"
 
-html_theme_options = {
-    "repository_url": "https://github.com/NKI-CCB/sobolev_alignment",
-    "use_repository_button": True,
-}
+# html_theme_options = {
+#     "repository_url": "https://github.com/NKI-CCB/sobolev_alignment",
+#     "use_repository_button": True,
+# }
 
 pygments_style = "default"
 

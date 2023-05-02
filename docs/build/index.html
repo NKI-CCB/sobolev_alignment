@@ -1,0 +1,544 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="generator"
+            content="Docutils 0.19: https://docutils.sourceforge.io/"
+        />
+
+        <title>
+            Sobolev Alignment: aligning deep general models with large-scale
+            kernel machines &#8212; Sobolev Alignment
+        </title>
+        <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+        <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css"
+        />
+        <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+        <script
+            data-url_root="./"
+            id="documentation_options"
+            src="_static/documentation_options.js"
+        ></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <link rel="index" title="Index" href="genindex.html" />
+        <link rel="search" title="Search" href="search.html" />
+        <link
+            rel="next"
+            title="sobolev_alignment"
+            href="content/modules.html"
+        />
+
+        <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=0.9, maximum-scale=0.9"
+        />
+    </head>
+    <body>
+        <div class="document">
+            <div class="documentwrapper">
+                <div class="bodywrapper">
+                    <div class="body" role="main">
+                        <section
+                            id="sobolev-alignment-aligning-deep-general-models-with-large-scale-kernel-machines"
+                        >
+                            <h1>
+                                Sobolev Alignment: aligning deep general models
+                                with large-scale kernel machines<a
+                                    class="headerlink"
+                                    href="#sobolev-alignment-aligning-deep-general-models-with-large-scale-kernel-machines"
+                                    title="Permalink to this heading"
+                                    >¶</a
+                                >
+                            </h1>
+                            <a
+                                class="reference internal image-reference"
+                                href="_images/workflow.png"
+                                ><img
+                                    alt="_images/workflow.png"
+                                    class="align-center"
+                                    src="_images/workflow.png"
+                                    style="width: 600px"
+                            /></a>
+                            <p>
+                                Sobolev Alignment identifies commonalities
+                                between cell lines and tumors at the single cell
+                                level using Sobolev Alignment of deep generative
+                                models. Using scVI as a backbone for generative
+                                models (VAE), latent variable models are
+                                approximated by means of large-scale kernel
+                                machines, using FalkonML. This allows a
+                                systematic appro
+                            </p>
+                            <div class="toctree-wrapper compound">
+                                <p class="caption" role="heading">
+                                    <span class="caption-text">Contents:</span>
+                                </p>
+                                <ul>
+                                    <li class="toctree-l1">
+                                        <a
+                                            class="reference internal"
+                                            href="content/modules.html"
+                                            >sobolev_alignment</a
+                                        >
+                                        <ul class="simple"></ul>
+                                    </li>
+                                    <li class="toctree-l1">
+                                        <a
+                                            class="reference internal"
+                                            href="content/sobolev_alignment.html"
+                                            >sobolev_alignment package</a
+                                        >
+                                        <ul>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#submodules"
+                                                    >Submodules</a
+                                                >
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.SobolevAlignment"
+                                                    >sobolev_alignment.SobolevAlignment
+                                                    module</a
+                                                >
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.feature_analysis"
+                                                    >sobolev_alignment.feature_analysis
+                                                    module</a
+                                                >
+                                                <ul>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.feature_analysis.basis"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >basis()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.feature_analysis.combinatorial_product"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >combinatorial_product()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.feature_analysis.higher_order_contribution"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >higher_order_contribution()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.generate_artificial_sample"
+                                                    >sobolev_alignment.generate_artificial_sample
+                                                    module</a
+                                                >
+                                                <ul>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.generate_artificial_sample.generate_samples"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >generate_samples()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.generate_artificial_sample.parallel_generate_samples"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >parallel_generate_samples()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.interpolated_features"
+                                                    >sobolev_alignment.interpolated_features
+                                                    module</a
+                                                >
+                                                <ul>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.interpolated_features.compute_optimal_tau"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >compute_optimal_tau()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.interpolated_features.project_on_interpolate_PV"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >project_on_interpolate_PV()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.kernel_operations"
+                                                    >sobolev_alignment.kernel_operations
+                                                    module</a
+                                                >
+                                                <ul>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.kernel_operations.mat_inv_sqrt"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >mat_inv_sqrt()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.krr_approx"
+                                                    >sobolev_alignment.krr_approx
+                                                    module</a
+                                                >
+                                                <ul>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.krr_approx.KRRApprox"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >KRRApprox</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.krr_model_selection"
+                                                    >sobolev_alignment.krr_model_selection
+                                                    module</a
+                                                >
+                                                <ul>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.krr_model_selection.model_alignment_penalization"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >model_alignment_penalization()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.krr_model_selection.model_selection_nu"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >model_selection_nu()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.multi_krr_approx"
+                                                    >sobolev_alignment.multi_krr_approx
+                                                    module</a
+                                                >
+                                                <ul>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.multi_krr_approx.MultiKRRApprox"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >MultiKRRApprox</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment.scvi_model_search"
+                                                    >sobolev_alignment.scvi_model_search
+                                                    module</a
+                                                >
+                                                <ul>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.scvi_model_search.make_objective_function"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >make_objective_function()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.scvi_model_search.model_selection"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >model_selection()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                    <li class="toctree-l3">
+                                                        <a
+                                                            class="reference internal"
+                                                            href="content/sobolev_alignment.html#sobolev_alignment.scvi_model_search.split_dataset"
+                                                            ><code
+                                                                class="docutils literal notranslate"
+                                                                ><span
+                                                                    class="pre"
+                                                                    >split_dataset()</span
+                                                                ></code
+                                                            ></a
+                                                        >
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="toctree-l2">
+                                                <a
+                                                    class="reference internal"
+                                                    href="content/sobolev_alignment.html#module-sobolev_alignment"
+                                                    >Module contents</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section id="indices-and-tables">
+                            <h1>
+                                Indices and tables<a
+                                    class="headerlink"
+                                    href="#indices-and-tables"
+                                    title="Permalink to this heading"
+                                    >¶</a
+                                >
+                            </h1>
+                            <ul class="simple">
+                                <li>
+                                    <p>
+                                        <a
+                                            class="reference internal"
+                                            href="genindex.html"
+                                            ><span class="std std-ref"
+                                                >Index</span
+                                            ></a
+                                        >
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <a
+                                            class="reference internal"
+                                            href="py-modindex.html"
+                                            ><span class="std std-ref"
+                                                >Module Index</span
+                                            ></a
+                                        >
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <a
+                                            class="reference internal"
+                                            href="search.html"
+                                            ><span class="std std-ref"
+                                                >Search Page</span
+                                            ></a
+                                        >
+                                    </p>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="sphinxsidebar"
+                role="navigation"
+                aria-label="main navigation"
+            >
+                <div class="sphinxsidebarwrapper">
+                    <h1 class="logo"><a href="#">Sobolev Alignment</a></h1>
+
+                    <h3>Navigation</h3>
+                    <p class="caption" role="heading">
+                        <span class="caption-text">Contents:</span>
+                    </p>
+                    <ul>
+                        <li class="toctree-l1">
+                            <a
+                                class="reference internal"
+                                href="content/modules.html"
+                                >sobolev_alignment</a
+                            >
+                        </li>
+                        <li class="toctree-l1">
+                            <a
+                                class="reference internal"
+                                href="content/sobolev_alignment.html"
+                                >sobolev_alignment package</a
+                            >
+                        </li>
+                    </ul>
+
+                    <div class="relations">
+                        <h3>Related Topics</h3>
+                        <ul>
+                            <li>
+                                <a href="#">Documentation overview</a>
+                                <ul>
+                                    <li>
+                                        Next:
+                                        <a
+                                            href="content/modules.html"
+                                            title="next chapter"
+                                            >sobolev_alignment</a
+                                        >
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="searchbox" style="display: none" role="search">
+                        <h3 id="searchlabel">Quick search</h3>
+                        <div class="searchformwrapper">
+                            <form
+                                class="search"
+                                action="search.html"
+                                method="get"
+                            >
+                                <input
+                                    type="text"
+                                    name="q"
+                                    aria-labelledby="searchlabel"
+                                    autocomplete="off"
+                                    autocorrect="off"
+                                    autocapitalize="off"
+                                    spellcheck="false"
+                                />
+                                <input type="submit" value="Go" />
+                            </form>
+                        </div>
+                    </div>
+                    <script>
+                        document.getElementById("searchbox").style.display =
+                            "block";
+                    </script>
+                </div>
+            </div>
+            <div class="clearer"></div>
+        </div>
+        <div class="footer">
+            &copy;2023, Soufiane Mourragui. | Powered by
+            <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a> &amp;
+            <a href="https://github.com/bitprophet/alabaster"
+                >Alabaster 0.7.13</a
+            >
+
+            |
+            <a href="_sources/index.rst.txt" rel="nofollow">Page source</a>
+        </div>
+    </body>
+</html>

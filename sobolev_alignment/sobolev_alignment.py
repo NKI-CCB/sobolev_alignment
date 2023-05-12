@@ -1410,6 +1410,35 @@ class SobolevAlignment:
             for x in self.training_data
         }
 
+    def permutation_test_number_similar_pvs(self, n_permutations: int = 10, quantile: int = 95, return_all: bool = False):
+        """Performs permutation test for assessing number of similar PVs."""
+        self.random_principal_angles = []
+
+        for _ in tqdm.tqdm(range(n_permutations)):
+            perm_clf = deepcopy(self)
+            for ds in perm_clf.artificial_samples_:
+                perm_clf.artificial_samples_[ds] = perm_clf.artificial_samples_[ds][
+                    :, np.random.permutation(np.arange(perm_clf.artificial_samples_[ds].shape[1]))
+                ]
+            self.random_principal_angles.append(
+                perm_clf.fit(
+                    X_source=perm_clf.training_data['source'],
+                    X_target=perm_clf.training_data['target'],
+                    fit_vae=False, 
+                    krr_approx=True, 
+                    sample_artificial=False
+                ).principal_angles
+            )
+
+        self.random_principal_angles = np.array(self.random_principal_angles)
+        if return_all:
+            return self.random_principal_angles
+        max_val = np.percentile(random_principal_angles[:,0], quantile)
+        self.number_similar_pvs = np.sum(self.principal_angles > max_val)
+        self.number_permutations_similar_pvs = n_permutations
+        return self.number_similar_pvs
+
+
     def sample_random_vector_(self, data_source, K):
         """Sample a vector randomly for either source or target."""
         n_samples = self.approximate_krr_regressions_[data_source].anchors().shape[0]

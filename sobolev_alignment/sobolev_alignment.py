@@ -1372,9 +1372,9 @@ class SobolevAlignment:
         }
 
         if gene_names is None:
-            if type(self.training_data['source']) is sc.AnnData:
-                self.gene_names = self.training_data['source'].var.index
-            elif type(self.training_data['source']) is pd.DataFrame:
+            if type(self.training_data["source"]) is sc.AnnData:
+                self.gene_names = self.training_data["source"].var.index
+            elif type(self.training_data["source"]) is pd.DataFrame:
                 self.gene_names = self.training_data["source"].columns
             self.gene_names = list(self.gene_names)
         else:

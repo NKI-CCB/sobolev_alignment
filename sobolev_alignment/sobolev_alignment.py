@@ -15,6 +15,7 @@ import gc
 import logging
 import os
 import re
+from copy import deepcopy
 from pickle import dump, load
 
 import matplotlib.pyplot as plt
@@ -23,14 +24,13 @@ import pandas as pd
 import scanpy as sc
 import scipy
 import scvi
-import tqdm
 import seaborn as sns
 import torch
+import tqdm
 from anndata import AnnData
 from joblib import Parallel, delayed
 from sklearn.metrics import pairwise_distances
 from sklearn.preprocessing import StandardScaler
-from copy import deepcopy
 
 from ._scvi_default_params import SCVI_MODEL_PARAMS, SCVI_PLAN_PARAMS, SCVI_TRAIN_PARAMS
 from .feature_analysis import _compute_offset, higher_order_contribution
@@ -1415,7 +1415,7 @@ class SobolevAlignment:
     def permutation_test_number_similar_pvs(
         self, n_permutations: int = 10, quantile: int = 95, return_all: bool = False
     ):
-        """Performs permutation test for assessing number of similar PVs."""
+        """Perform permutation test for assessing number of similar PVs."""
         self.random_principal_angles = []
 
         for _ in tqdm.tqdm(range(n_permutations)):

@@ -23,12 +23,14 @@ import pandas as pd
 import scanpy as sc
 import scipy
 import scvi
+import tqdm
 import seaborn as sns
 import torch
 from anndata import AnnData
 from joblib import Parallel, delayed
 from sklearn.metrics import pairwise_distances
 from sklearn.preprocessing import StandardScaler
+from copy import deepcopy
 
 from ._scvi_default_params import SCVI_MODEL_PARAMS, SCVI_PLAN_PARAMS, SCVI_TRAIN_PARAMS
 from .feature_analysis import _compute_offset, higher_order_contribution
@@ -1410,7 +1412,9 @@ class SobolevAlignment:
             for x in self.training_data
         }
 
-    def permutation_test_number_similar_pvs(self, n_permutations: int = 10, quantile: int = 95, return_all: bool = False):
+    def permutation_test_number_similar_pvs(
+        self, n_permutations: int = 10, quantile: int = 95, return_all: bool = False
+    ):
         """Performs permutation test for assessing number of similar PVs."""
         self.random_principal_angles = []
 
@@ -1422,22 +1426,21 @@ class SobolevAlignment:
                 ]
             self.random_principal_angles.append(
                 perm_clf.fit(
-                    X_source=perm_clf.training_data['source'],
-                    X_target=perm_clf.training_data['target'],
-                    fit_vae=False, 
-                    krr_approx=True, 
-                    sample_artificial=False
+                    X_source=perm_clf.training_data["source"],
+                    X_target=perm_clf.training_data["target"],
+                    fit_vae=False,
+                    krr_approx=True,
+                    sample_artificial=False,
                 ).principal_angles
             )
 
         self.random_principal_angles = np.array(self.random_principal_angles)
         if return_all:
             return self.random_principal_angles
-        max_val = np.percentile(random_principal_angles[:,0], quantile)
+        max_val = np.percentile(self.random_principal_angles[:, 0], quantile)
         self.number_similar_pvs = np.sum(self.principal_angles > max_val)
         self.number_permutations_similar_pvs = n_permutations
         return self.number_similar_pvs
-
 
     def sample_random_vector_(self, data_source, K):
         """Sample a vector randomly for either source or target."""

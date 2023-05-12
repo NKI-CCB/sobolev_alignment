@@ -40,10 +40,10 @@ To employ large-scale GPU-accelerated kernel methods, we turn to Falkon. The ins
 
 ## Tutorial
 
-In the folder ``` tutorial ```, you will find different tutorial in the form of Jupyter notebooks examplifying how to use the package. Specifically:
-- process_data.ipynb: example on how to pre-process the data prior to use Sobolev Alignment. If you data has already been processed, the main step consists in adding the counts as layers, e.g., ``` an.layers['counts'] = an.X ```.
-- tutorial_simple.ipynb: basic example on how to run Sobolev Alignment with basic parameters.
+In the folder `tutorial`, you will find different tutorial in the form of Jupyter notebooks examplifying how to use the package. Specifically:
 
+-   process_data.ipynb: example on how to pre-process the data prior to use Sobolev Alignment. If you data has already been processed, the main step consists in adding the counts as layers, e.g., `an.layers['counts'] = an.X`.
+-   tutorial_simple.ipynb: basic example on how to run Sobolev Alignment with basic parameters.
 
 ## Frequent issues
 
@@ -97,6 +97,7 @@ For questions and help requests, you can reach out at the following e-mail addre
 ## Citation
 
 If you find this package useful, please cite our publication:
+
 > [Identifying commonalities between cell lines and tumors at the single cell level using Sobolev Alignment of deep generative models, Mourragui et al, 2022, Biorxiv](https://www.biorxiv.org/content/10.1101/2022.03.08.483431v1)
 
 [scverse-discourse]: https://discourse.scverse.org/

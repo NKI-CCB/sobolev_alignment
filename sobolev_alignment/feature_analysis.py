@@ -151,7 +151,7 @@ def basis(x, k, gamma):
     product = x
     for _ in range(1, k):
         product = x.multiply(product)
-    coef = np.power(2 * gamma, k / 2) / np.sqrt(scipy.math.factorial(k))
+    coef = np.power(2 * gamma, k / 2) / np.sqrt(scipy.special.factorial(k))
 
     return coef * product
 

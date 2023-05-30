@@ -20,7 +20,7 @@ setuptools.setup(
         "pandas",
         "matplotlib",
         "scikit-learn",
-        "torch==1.11.0",
+        "torch==1.13.1",
         "scvi-tools==0.20.0",
         "scanpy",
         "hyperopt",

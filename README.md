@@ -45,6 +45,16 @@ In the folder `tutorial`, you will find different tutorial in the form of Jupyte
 -   process_data.ipynb: example on how to pre-process the data prior to use Sobolev Alignment. If you data has already been processed, the main step consists in adding the counts as layers, e.g., `an.layers['counts'] = an.X`.
 -   tutorial_simple.ipynb: basic example on how to run Sobolev Alignment with basic parameters.
 
+Additional packages need to be installed to use MNN on top of Sobolev Alignment:
+- rpy2, which can be installed using pip (`pip install rpy2`).
+- The R package batchelor. To do so, after activating your conda environment, get into R and enter the following commands:
+'''
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("batchelor")
+'''
+
 ## Frequent issues
 
 ### Issues with the compiler.

@@ -159,7 +159,7 @@ class TestSobolevAlignment:
         self,
         scvi_batch_trained,
     ):
-        assert type(scvi_batch_trained.scvi_models) is dict
+        assert isinstance(scvi_batch_trained.scvi_models, dict)
         for _, model in scvi_batch_trained.scvi_models.items():
             assert model.history["train_loss_epoch"].values[-1, 0] < model.history["train_loss_epoch"].values[0, 0]
 
@@ -175,7 +175,7 @@ class TestSobolevAlignment:
         self,
         scvi_batch_trained_lib_size,
     ):
-        assert type(scvi_batch_trained_lib_size.scvi_models) is dict
+        assert isinstance(scvi_batch_trained_lib_size.scvi_models, dict)
         for _, model in scvi_batch_trained_lib_size.scvi_models.items():
             assert model.history["train_loss_epoch"].values[-1, 0] < model.history["train_loss_epoch"].values[0, 0]
 

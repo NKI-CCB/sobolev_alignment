@@ -547,7 +547,7 @@ class SobolevAlignment:
         del _generated_data
         gc.collect()
 
-        if save_mmap is not None and type(save_mmap) is str:
+        if save_mmap is not None and isinstance(save_mmap, str):
             np.save(open(os.path.join(save_mmap, "%s_artificial_input.npy" % (data_source)), "wb"), artificial_samples)
             artificial_samples = np.load(
                 os.path.join(save_mmap, "%s_artificial_input.npy" % (data_source)), mmap_mode="r"
@@ -707,7 +707,7 @@ class SobolevAlignment:
         frob_norm_source: bool = False,
     ):
         # Save embedding
-        if save_mmap is not None and type(save_mmap) is str:
+        if save_mmap is not None and isinstance(save_mmap, str):
             self._save_mmap = save_mmap
             self._memmap_embedding(
                 data_source=data_source, artificial_embeddings=artificial_embeddings, save_mmap=save_mmap
@@ -724,7 +724,7 @@ class SobolevAlignment:
             # Frobenius norm scaling
             artificial_samples = self._frobenius_normalisation(data_source, artificial_samples, frob_norm_source)
 
-            if save_mmap is not None and type(save_mmap) is str:
+            if save_mmap is not None and isinstance(save_mmap, str):
                 # Re-save
                 np.save(open(f"{save_mmap}/{data_source}_artificial_input.npy", "wb"), artificial_samples)
                 artificial_samples = np.load(f"{save_mmap}/{data_source}_artificial_input.npy", mmap_mode="r")

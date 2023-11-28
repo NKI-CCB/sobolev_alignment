@@ -40,25 +40,26 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    # CLI for bumping the version number
-    "bump2version",
     "pre-commit",
     "twine>=4.0.2"
 ]
 doc = [
+    "docutils>=0.8,!=0.18.*,!=0.19.*",
     "sphinx>=4",
     "sphinx-book-theme>=1.0.0",
     "myst-nb",
     "sphinxcontrib-bibtex>=1.0.0",
     "sphinx-autodoc-typehints",
+    "sphinxext-opengraph",
     # For notebooks
     "ipykernel",
     "ipython",
     "sphinx-copybutton",
+    "pandas",
 ]
 test = [
     "pytest",
-    "pytest-cov",
+    "coverage",
 ]
 
 [tool.coverage.run]
@@ -76,12 +77,10 @@ addopts = [
 
 [tool.black]
 line-length = 120
-target-version = ["py38"]
 
 [tool.ruff]
 src = ["src"]
 line-length = 120
-target-version = "py38"
 select = [
     "F",  # Errors detected by Pyflakes
     "E",  # Error detected by Pycodestyle
@@ -130,9 +129,6 @@ convention = "numpy"
 "docs/*" = ["I"]
 "tests/*" = ["D"]
 "*/__init__.py" = ["F401"]
-
-[tool.jupytext]
-formats = "ipynb,md"
 
 [tool.cruft]
 skip = [

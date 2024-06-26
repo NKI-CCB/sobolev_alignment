@@ -1,23 +1,29 @@
 {
-    "template": "https://github.com/scverse/cookiecutter-scverse",
-    "commit": "c21b82bf134f3a0f13db7482d4fb04ca1f562d59",
-    "checkout": "main",
-    "context": {
-        "cookiecutter": {
-            "project_name": "sobolev_alignment",
-            "package_name": "sobolev_alignment",
-            "project_description": "Sobolev alignment of deep probabilistic models for comparing single cell profiles",
-            "author_full_name": "Soufiane Mourragui",
-            "author_email": "soufiane.mourragui@gmail.com",
-            "github_user": "saroudant",
-            "project_repo": "https://github.com/saroudant/sobolev_alignment",
-            "license": "MIT License",
-            "_copy_without_render": [
-                ".github/workflows/**.yaml",
-                "docs/_templates/autosummary/**.rst"
-            ],
-            "_template": "https://github.com/scverse/cookiecutter-scverse"
-        }
-    },
-    "directory": null
+  "template": "https://github.com/scverse/cookiecutter-scverse",
+  "commit": "87a407a65408d75a949c0b54b19fd287475a56f8",
+  "checkout": "v0.4.0",
+  "context": {
+    "cookiecutter": {
+      "project_name": "sobolev_alignment",
+      "package_name": "sobolev_alignment",
+      "project_description": "Sobolev alignment of deep probabilistic models for comparing single cell profiles",
+      "author_full_name": "Soufiane Mourragui",
+      "author_email": "soufiane.mourragui@gmail.com",
+      "github_user": "saroudant",
+      "project_repo": "https://github.com/saroudant/sobolev_alignment",
+      "license": "MIT License",
+      "_copy_without_render": [
+        ".github/workflows/build.yaml",
+        ".github/workflows/test.yaml",
+        "docs/_templates/autosummary/**.rst"
+      ],
+      "_render_devdocs": false,
+      "_jinja2_env_vars": {
+        "lstrip_blocks": true,
+        "trim_blocks": true
+      },
+      "_template": "https://github.com/scverse/cookiecutter-scverse"
+    }
+  },
+  "directory": null
 }

@@ -117,7 +117,11 @@ def model_selection_nu(
 
     # Generate artificial samples
     sobolev_alignment_clf.fit(
-        X_source=X_source, X_target=X_target, fit_vae=False, sample_artificial=True, krr_approx=False
+        X_source=X_source,
+        X_target=X_target,
+        fit_vae=False,
+        sample_artificial=True,
+        krr_approx=False,
     )
 
     for krr_params in krr_param_grid:
@@ -128,17 +132,26 @@ def model_selection_nu(
             "$".join([f"{e}:{f}" for e, f in krr_params["kernel_params"].items()]),
         )
 
-        sobolev_alignment_clf.krr_params = {"source": deepcopy(krr_params), "target": deepcopy(krr_params)}
+        sobolev_alignment_clf.krr_params = {
+            "source": deepcopy(krr_params),
+            "target": deepcopy(krr_params),
+        }
 
         print("\t START %s" % (param_id), flush=True)
         sobolev_alignment_clf.fit(
-            X_source=X_source, X_target=X_target, fit_vae=False, sample_artificial=False, krr_approx=True
+            X_source=X_source,
+            X_target=X_target,
+            fit_vae=False,
+            sample_artificial=False,
+            krr_approx=True,
         )
         gc.collect()
 
         # Compute_error
         krr_approx_error = sobolev_alignment_clf.compute_error(size=test_error_size)
-        processed_error_df = {x: _process_error_df(df) for x, df in krr_approx_error.items()}
+        processed_error_df = {
+            x: _process_error_df(df) for x, df in krr_approx_error.items()
+        }
         processed_latent_error_df = {x: df[0] for x, df in processed_error_df.items()}
         processed_latent_error_df = pd.concat(processed_latent_error_df)
         latent_results_krr_error_df[param_id] = processed_latent_error_df
@@ -150,17 +163,28 @@ def model_selection_nu(
     latent_error_df.index.names = ["param_id", "data_source", "data_generation"]
     latent_error_df = latent_error_df.reset_index()
     latent_error_df = latent_error_df.reset_index().pivot_table(
-        values="spearmanr", index=["data_source", "param_id"], columns=["data_generation"]
+        values="spearmanr",
+        index=["data_source", "param_id"],
+        columns=["data_generation"],
     )
-    latent_spearman_df = pd.concat({x: latent_error_df.loc[x]["input"] for x in ["source", "target"]}, axis=1)
-    latent_spearman_df["combined"] = np.sum(latent_spearman_df, axis=1) / latent_spearman_df.shape[1]
+    latent_spearman_df = pd.concat(
+        {x: latent_error_df.loc[x]["input"] for x in ["source", "target"]}, axis=1
+    )
+    latent_spearman_df["combined"] = (
+        np.sum(latent_spearman_df, axis=1) / latent_spearman_df.shape[1]
+    )
     latent_spearman_df = latent_spearman_df.sort_values("combined", ascending=False)
 
     return latent_spearman_df
 
 
 def model_alignment_penalization(
-    X_data: AnnData, data_source: str, sobolev_alignment_clf, sigma: float, optimal_nu: float, M: int = 250
+    X_data: AnnData,
+    data_source: str,
+    sobolev_alignment_clf,
+    sigma: float,
+    optimal_nu: float,
+    M: int = 250,
 ):
     r"""
     $\\sigma$ and $\nu$ selection.
@@ -201,14 +225,24 @@ def model_alignment_penalization(
     _clf = deepcopy(sobolev_alignment_clf)
     supp_data_source = "target" if data_source == "source" else "source"
     _clf.scvi_models[supp_data_source] = sobolev_alignment_clf.scvi_models[data_source]
-    _clf.scvi_batch_keys_[supp_data_source] = sobolev_alignment_clf.scvi_batch_keys_[data_source]
+    _clf.scvi_batch_keys_[supp_data_source] = sobolev_alignment_clf.scvi_batch_keys_[
+        data_source
+    ]
     gc.collect()
 
     # Artificial sampling
     _clf.n_jobs = 1
     _clf.batch_name[supp_data_source] = _clf.batch_name[data_source]
-    _clf.continuous_covariate_names[supp_data_source] = _clf.continuous_covariate_names[data_source]
-    _clf.fit(X_source=X_data, X_target=X_data, fit_vae=False, sample_artificial=True, krr_approx=False)
+    _clf.continuous_covariate_names[supp_data_source] = _clf.continuous_covariate_names[
+        data_source
+    ]
+    _clf.fit(
+        X_source=X_data,
+        X_target=X_data,
+        fit_vae=False,
+        sample_artificial=True,
+        krr_approx=False,
+    )
 
     krr_param_grid = _make_hyperparameters_grid(sigma, M, [optimal_nu])
     principal_angles_df = {}
@@ -223,7 +257,13 @@ def model_alignment_penalization(
         _clf.krr_params = {"source": krr_params, "target": krr_params}
 
         print("\t START %s" % (param_id), flush=True)
-        _clf.fit(X_source=X_data, X_target=X_data, fit_vae=False, sample_artificial=False, krr_approx=True)
+        _clf.fit(
+            X_source=X_data,
+            X_target=X_data,
+            fit_vae=False,
+            sample_artificial=False,
+            krr_approx=True,
+        )
         gc.collect()
 
         # Compute_error
@@ -237,12 +277,16 @@ def model_alignment_penalization(
 def _make_hyperparameters_grid(sigma, M, nu_values=None):
     nu_values = nu_values if nu_values else [0.5, 1.5, 2.5, np.inf]
     krr_param_possibilities = deepcopy(DEFAULT_KRR_PARAMS)
-    krr_param_possibilities["kernel_params"] = [{"sigma": sigma, "nu": n} for n in nu_values]
+    krr_param_possibilities["kernel_params"] = [
+        {"sigma": sigma, "nu": n} for n in nu_values
+    ]
     krr_param_possibilities["M"] = [M]
     return ParameterGrid(krr_param_possibilities)
 
 
 def _process_error_df(df):
     latent_error_df = pd.DataFrame(df["latent"])
-    factor_error_df = pd.concat({x: pd.DataFrame(df["factor"][x]) for x in df["factor"]})
+    factor_error_df = pd.concat(
+        {x: pd.DataFrame(df["factor"][x]) for x in df["factor"]}
+    )
     return [latent_error_df, factor_error_df]

@@ -9,7 +9,9 @@ import pandas as pd
 import scipy
 
 
-def compute_optimal_tau(PV_number, pv_projections, principal_angles, n_interpolation=100):
+def compute_optimal_tau(
+    PV_number, pv_projections, principal_angles, n_interpolation=100
+):
     """Compute the optimal interpolation step for each PV (Grassmann interpolation)."""
     ks_statistics = {}
     for tau_step in np.linspace(0, 1, n_interpolation + 1):
@@ -25,12 +27,22 @@ def compute_optimal_tau(PV_number, pv_projections, principal_angles, n_interpola
 
 def project_on_interpolate_PV(angle, PV_number, tau_step, pv_projections):
     """Project data on interpolated PVs."""
-    source_proj = np.sin((1 - tau_step) * angle) * pv_projections["source"]["source"][:, PV_number]
-    source_proj += np.sin(tau_step * angle) * pv_projections["target"]["source"][:, PV_number]
+    source_proj = (
+        np.sin((1 - tau_step) * angle)
+        * pv_projections["source"]["source"][:, PV_number]
+    )
+    source_proj += (
+        np.sin(tau_step * angle) * pv_projections["target"]["source"][:, PV_number]
+    )
     source_proj /= np.sin(angle)
 
-    target_proj = np.sin((1 - tau_step) * angle) * pv_projections["source"]["target"][:, PV_number]
-    target_proj += np.sin(tau_step * angle) * pv_projections["target"]["target"][:, PV_number]
+    target_proj = (
+        np.sin((1 - tau_step) * angle)
+        * pv_projections["source"]["target"][:, PV_number]
+    )
+    target_proj += (
+        np.sin(tau_step * angle) * pv_projections["target"]["target"][:, PV_number]
+    )
     target_proj /= np.sin(angle)
 
     return source_proj, target_proj

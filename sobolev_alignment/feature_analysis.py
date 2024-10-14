@@ -79,7 +79,9 @@ def higher_order_contribution(
 
     # Compute features by iterating over possible combinations
     logging.info("\t START FEATURES")
-    combinations_features = Parallel(n_jobs=n_jobs, verbose=1, max_nbytes=1e6, pre_dispatch=int(1.5 * n_jobs))(
+    combinations_features = Parallel(
+        n_jobs=n_jobs, verbose=1, max_nbytes=1e6, pre_dispatch=int(1.5 * n_jobs)
+    )(
         delayed(combinatorial_product)(sparse_data, x, gamma)
         for x in combinations_with_replacement(np.arange(sparse_data.shape[1]), r=d)
     )
@@ -98,10 +100,18 @@ def higher_order_contribution(
     # Return names of each features.
     logging.info("\t\t FIND NAMES")
     combinations_names = Parallel(
-        n_jobs=min(5, n_jobs), verbose=1, max_nbytes=1e4, pre_dispatch=int(1.5 * min(5, n_jobs))
-    )(delayed(_interaction_name)(x) for x in combinations_with_replacement(gene_names, r=d))
+        n_jobs=min(5, n_jobs),
+        verbose=1,
+        max_nbytes=1e4,
+        pre_dispatch=int(1.5 * min(5, n_jobs)),
+    )(
+        delayed(_interaction_name)(x)
+        for x in combinations_with_replacement(gene_names, r=d)
+    )
 
-    return pd.DataFrame.sparse.from_spmatrix(data=combinations_features, columns=combinations_names)
+    return pd.DataFrame.sparse.from_spmatrix(
+        data=combinations_features, columns=combinations_names
+    )
 
 
 def _combination_to_idx(idx, p):
@@ -177,7 +187,11 @@ def combinatorial_product(x, idx, gamma):
         Values of the higher order feature.
     """
     # Iterate over all genes and compute the feature weight by multiplication
-    prod = [basis(x[:, i], k, gamma) for i, k in enumerate(_combination_to_idx(idx, x.shape[1])) if k > 0]
+    prod = [
+        basis(x[:, i], k, gamma)
+        for i, k in enumerate(_combination_to_idx(idx, x.shape[1]))
+        if k > 0
+    ]
     if len(prod) == 0:
         return 1
 
@@ -185,12 +199,17 @@ def combinatorial_product(x, idx, gamma):
 
 
 def _interaction_name(gene_combi):
-    combin_name = [f"{g}^{r}" for g, r in zip(*np.unique(gene_combi, return_counts=True))]
+    combin_name = [
+        f"{g}^{r}" for g, r in zip(*np.unique(gene_combi, return_counts=True))
+    ]
     return "*".join(combin_name) if len(combin_name) > 0 else "1"
 
 
 def _higher_order_interaction_wrapper(data, x, gamma, gene_names):
-    return [combinatorial_product(data, x, gamma), _interaction_name(gene_names, _combination_to_idx(x, data.shape[1]))]
+    return [
+        combinatorial_product(data, x, gamma),
+        _interaction_name(gene_names, _combination_to_idx(x, data.shape[1])),
+    ]
 
 
 def _compute_offset(data, gamma):

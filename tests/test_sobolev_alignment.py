@@ -22,13 +22,19 @@ def falkon_import():
 @pytest.fixture(scope="module")
 def source_data():
     poisson_coef = np.random.randint(1, 25, size=n_genes)
-    return np.concatenate([np.random.poisson(lam=l, size=n_samples).reshape(-1, 1) for l in poisson_coef], axis=1)
+    return np.concatenate(
+        [np.random.poisson(lam=l, size=n_samples).reshape(-1, 1) for l in poisson_coef],
+        axis=1,
+    )
 
 
 @pytest.fixture(scope="module")
 def target_data():
     poisson_coef = np.random.randint(1, 25, size=n_genes)
-    return np.concatenate([np.random.poisson(lam=l, size=n_samples).reshape(-1, 1) for l in poisson_coef], axis=1)
+    return np.concatenate(
+        [np.random.poisson(lam=l, size=n_samples).reshape(-1, 1) for l in poisson_coef],
+        axis=1,
+    )
 
 
 @pytest.fixture(scope="module")
@@ -93,7 +99,9 @@ def target_scvi_params():
 
 class TestSobolevAlignment:
     @pytest.fixture(scope="class")
-    def sobolev_alignment_raw(self, falkon_import, source_scvi_params, target_scvi_params):
+    def sobolev_alignment_raw(
+        self, falkon_import, source_scvi_params, target_scvi_params
+    ):
         if falkon_import:
             source_krr_params = {"method": "falkon"}
             target_krr_params = {"method": "falkon"}
@@ -112,7 +120,9 @@ class TestSobolevAlignment:
         )
 
     @pytest.fixture(scope="class")
-    def sobolev_alignment_batch(self, falkon_import, source_scvi_params, target_scvi_params):
+    def sobolev_alignment_batch(
+        self, falkon_import, source_scvi_params, target_scvi_params
+    ):
         if falkon_import:
             source_krr_params = {"method": "falkon"}
             target_krr_params = {"method": "falkon"}
@@ -141,11 +151,17 @@ class TestSobolevAlignment:
         )
 
     @pytest.fixture(scope="class")
-    def scvi_batch_trained(self, source_anndata, target_anndata, sobolev_alignment_batch):
-        return sobolev_alignment_batch.fit(X_source=source_anndata, X_target=target_anndata)
+    def scvi_batch_trained(
+        self, source_anndata, target_anndata, sobolev_alignment_batch
+    ):
+        return sobolev_alignment_batch.fit(
+            X_source=source_anndata, X_target=target_anndata
+        )
 
     @pytest.fixture(scope="class")
-    def scvi_batch_trained_lib_size(self, source_anndata, target_anndata, sobolev_alignment_batch):
+    def scvi_batch_trained_lib_size(
+        self, source_anndata, target_anndata, sobolev_alignment_batch
+    ):
         return sobolev_alignment_batch.fit(
             X_source=source_anndata,
             X_target=target_anndata,
@@ -161,14 +177,23 @@ class TestSobolevAlignment:
     ):
         assert isinstance(scvi_batch_trained.scvi_models, dict)
         for _, model in scvi_batch_trained.scvi_models.items():
-            assert model.history["train_loss_epoch"].values[-1, 0] < model.history["train_loss_epoch"].values[0, 0]
+            assert (
+                model.history["train_loss_epoch"].values[-1, 0]
+                < model.history["train_loss_epoch"].values[0, 0]
+            )
 
         for x in scvi_batch_trained.artificial_samples_:
-            assert scvi_batch_trained.artificial_samples_[x].shape[0] == n_artificial_samples * frac_save_artificial
+            assert (
+                scvi_batch_trained.artificial_samples_[x].shape[0]
+                == n_artificial_samples * frac_save_artificial
+            )
             assert scvi_batch_trained.artificial_samples_[x].shape[1] == n_genes
 
         for x in scvi_batch_trained.artificial_embeddings_:
-            assert scvi_batch_trained.artificial_embeddings_[x].shape[0] == n_artificial_samples * frac_save_artificial
+            assert (
+                scvi_batch_trained.artificial_embeddings_[x].shape[0]
+                == n_artificial_samples * frac_save_artificial
+            )
             assert scvi_batch_trained.artificial_embeddings_[x].shape[1] == n_latent
 
     def test_training_scvi_batch_trained_lib_size(
@@ -177,21 +202,29 @@ class TestSobolevAlignment:
     ):
         assert isinstance(scvi_batch_trained_lib_size.scvi_models, dict)
         for _, model in scvi_batch_trained_lib_size.scvi_models.items():
-            assert model.history["train_loss_epoch"].values[-1, 0] < model.history["train_loss_epoch"].values[0, 0]
+            assert (
+                model.history["train_loss_epoch"].values[-1, 0]
+                < model.history["train_loss_epoch"].values[0, 0]
+            )
 
         for x in scvi_batch_trained_lib_size.artificial_samples_:
             assert (
                 scvi_batch_trained_lib_size.artificial_samples_[x].shape[0]
                 == n_artificial_samples * frac_save_artificial
             )
-            assert scvi_batch_trained_lib_size.artificial_samples_[x].shape[1] == n_genes
+            assert (
+                scvi_batch_trained_lib_size.artificial_samples_[x].shape[1] == n_genes
+            )
 
         for x in scvi_batch_trained_lib_size.artificial_embeddings_:
             assert (
                 scvi_batch_trained_lib_size.artificial_embeddings_[x].shape[0]
                 == n_artificial_samples * frac_save_artificial
             )
-            assert scvi_batch_trained_lib_size.artificial_embeddings_[x].shape[1] == n_latent
+            assert (
+                scvi_batch_trained_lib_size.artificial_embeddings_[x].shape[1]
+                == n_latent
+            )
 
         # np.savetxt(open('source.csv', 'w'), scvi_batch_trained_lib_size.artificial_samples_['source'])
         # np.savetxt(open('target.csv', 'w'), scvi_batch_trained_lib_size.artificial_samples_['target'])
@@ -201,7 +234,12 @@ class TestSobolevAlignment:
 
     def test_KRR_scvi_trained(self, scvi_batch_trained):
         for x in scvi_batch_trained.artificial_samples_:
-            assert scvi_batch_trained.approximate_krr_regressions_[x].sample_weights_.shape[1] == n_latent
+            assert (
+                scvi_batch_trained.approximate_krr_regressions_[
+                    x
+                ].sample_weights_.shape[1]
+                == n_latent
+            )
 
     # def test_training_scvi_raw_trained(self, scvi_raw_trained):
     #     assert type(scvi_raw_trained.scvi_models) == dict

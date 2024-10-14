@@ -34,7 +34,10 @@ try:
     FALKON_IMPORTED = True
 except ImportError:
     FALKON_IMPORTED = False
-    print("FALKON NOT INSTALLED, OR NOT IMPORTED. USING FALKON WOULD RESULT IN BETTER PERFORMANCE.", flush=True)
+    print(
+        "FALKON NOT INSTALLED, OR NOT IMPORTED. USING FALKON WOULD RESULT IN BETTER PERFORMANCE.",
+        flush=True,
+    )
 from sklearn.gaussian_process.kernels import Matern, PairwiseKernel
 from sklearn.kernel_ridge import KernelRidge
 
@@ -133,7 +136,11 @@ class KRRApprox:
 
         # Set kernel
         self.kernel = kernel
-        self.kernel_params = kernel_params if kernel_params else self.default_kernel_params[self.method][self.kernel]
+        self.kernel_params = (
+            kernel_params
+            if kernel_params
+            else self.default_kernel_params[self.method][self.kernel]
+        )
         self._make_kernel()
 
         # Set penalization parameters
@@ -147,7 +154,9 @@ class KRRApprox:
         # Preprocessing
         self.mean_center = mean_center
         self.unit_std = unit_std
-        self.pre_process_ = StandardScaler(with_mean=mean_center, with_std=unit_std, copy=False)
+        self.pre_process_ = StandardScaler(
+            with_mean=mean_center, with_std=unit_std, copy=False
+        )
 
     def _make_kernel(self):
         """
@@ -160,9 +169,13 @@ class KRRApprox:
         # scikit-learn initialization
         if self.method.lower() == "sklearn":
             if self.sklearn_kernel[self.kernel.lower()] != "wrapper":
-                self.kernel_ = self.sklearn_kernel[self.kernel.lower()](**self.kernel_params)
+                self.kernel_ = self.sklearn_kernel[self.kernel.lower()](
+                    **self.kernel_params
+                )
             else:
-                self.kernel_ = PairwiseKernel(metric=self.kernel.lower(), **self.kernel_params)
+                self.kernel_ = PairwiseKernel(
+                    metric=self.kernel.lower(), **self.kernel_params
+                )
 
         # Falkon
         elif self.method.lower() == "falkon":
@@ -170,7 +183,9 @@ class KRRApprox:
 
         # If not implemented
         else:
-            raise NotImplementedError("%s not implemented. Choices: sklearn and falkon" % (self.method))
+            raise NotImplementedError(
+                "%s not implemented. Choices: sklearn and falkon" % (self.method)
+            )
 
         return True
 
@@ -197,7 +212,9 @@ class KRRApprox:
         # are False as it can have a large memory footprint.
         if self.mean_center or self.unit_std:
             self.pre_process_.fit(X)
-            self.training_data_ = torch.Tensor(self.pre_process_.transform(torch.Tensor(X)))
+            self.training_data_ = torch.Tensor(
+                self.pre_process_.transform(torch.Tensor(X))
+            )
         else:
             self.training_data_ = X
 
@@ -296,7 +313,9 @@ class KRRApprox:
         elif self.method == "falkon":
             return self.ridge_clf_.predict(X)
         else:
-            raise NotImplementedError("%s not implemented. Choices: sklearn and falkon" % (self.method))
+            raise NotImplementedError(
+                "%s not implemented. Choices: sklearn and falkon" % (self.method)
+            )
 
     def save(self, folder: str = "."):
         """
@@ -330,12 +349,19 @@ class KRRApprox:
         # Save important material:
         #   - KRR weights
         #   - Samples used for prediction.
-        torch.save(torch.Tensor(self.anchors()), open("%s/sample_anchors.pt" % (folder), "wb"))
-        torch.save(torch.Tensor(self.sample_weights_), open("%s/sample_weights.pt" % (folder), "wb"))
+        torch.save(
+            torch.Tensor(self.anchors()), open("%s/sample_anchors.pt" % (folder), "wb")
+        )
+        torch.save(
+            torch.Tensor(self.sample_weights_),
+            open("%s/sample_weights.pt" % (folder), "wb"),
+        )
 
         # Save weights and anchors as csv.
         # Longer to load, but compatible with all platforms.
-        np.savetxt("%s/sample_weights.csv" % (folder), self.sample_weights_.detach().numpy())
+        np.savetxt(
+            "%s/sample_weights.csv" % (folder), self.sample_weights_.detach().numpy()
+        )
         np.savetxt("%s/sample_anchors.csv" % (folder), self.anchors().detach().numpy())
 
         return True
@@ -356,15 +382,21 @@ class KRRApprox:
         # Load and format parameters.
         params = load(open("%s/params.pkl" % (folder), "rb"))
         krr_params = {
-            e: f for e, f in params.items() if e in ["method", "M", "penalization", "mean_center", "unit_std"]
+            e: f
+            for e, f in params.items()
+            if e in ["method", "M", "penalization", "mean_center", "unit_std"]
         }
         # krr_params['kernel'] = krr_params['kernel'].kernel_name
         krr_approx_clf = KRRApprox(**krr_params)
         krr_approx_clf.kernel_ = params["kernel"]
 
         # Load sample weights and anchors.
-        krr_approx_clf.sample_weights_ = torch.load(open("%s/sample_weights.pt" % (folder), "rb"))
-        krr_approx_clf.training_data_ = torch.load(open("%s/sample_anchors.pt" % (folder), "rb"))
+        krr_approx_clf.sample_weights_ = torch.load(
+            open("%s/sample_weights.pt" % (folder), "rb")
+        )
+        krr_approx_clf.training_data_ = torch.load(
+            open("%s/sample_anchors.pt" % (folder), "rb")
+        )
 
         # Set up classifiers for out-of-sample application.
         krr_approx_clf._setup_clf()

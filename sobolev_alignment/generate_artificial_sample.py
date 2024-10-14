@@ -66,7 +66,9 @@ def generate_samples(
         batch_name_ids = [batch_key_dict[n] for n in batch_names]
         batch_name_ids = torch.Tensor(np.array(batch_name_ids).reshape(-1, 1))
         # Recover log library size (exponential)
-        lib_size_samples = np.array([np.random.choice(lib_size[n], 1)[0] for n in batch_names])
+        lib_size_samples = np.array(
+            [np.random.choice(lib_size[n], 1)[0] for n in batch_names]
+        )
         lib_size_samples = np.log(lib_size_samples)
     else:
         batch_name_ids = None
@@ -82,7 +84,11 @@ def generate_samples(
         cont_covs = torch.Tensor(covariates_values)
 
     # Generate random noise
-    z = torch.Tensor(np.random.normal(size=(int(sample_size), model.init_params_["non_kwargs"]["n_latent"])))
+    z = torch.Tensor(
+        np.random.normal(
+            size=(int(sample_size), model.init_params_["non_kwargs"]["n_latent"])
+        )
+    )
     dist_param_samples = model.module.generative(
         z=z,
         library=torch.Tensor(np.array(lib_size_samples).reshape(-1, 1)),
@@ -156,8 +162,14 @@ def parallel_generate_samples(
     results = Parallel(n_jobs=n_jobs, verbose=1)(
         delayed(generate_samples)(
             sample_size=batch_size,
-            batch_names=batch_names[i : i + batch_size] if batch_names is not None else None,
-            covariates_values=covariates_values[i : i + batch_size] if covariates_values is not None else None,
+            batch_names=(
+                batch_names[i : i + batch_size] if batch_names is not None else None
+            ),
+            covariates_values=(
+                covariates_values[i : i + batch_size]
+                if covariates_values is not None
+                else None
+            ),
             lib_size=lib_size,
             model=model,
             batch_key_dict=batch_key_dict,

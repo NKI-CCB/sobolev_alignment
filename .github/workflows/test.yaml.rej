@@ -1,7 +1,7 @@
 diff a/.github/workflows/test.yaml b/.github/workflows/test.yaml	(rejected hunks)
 @@ -1,53 +1,67 @@
  name: Test
- 
+
  on:
 -    push:
 -        branches: [main]
@@ -13,13 +13,13 @@ diff a/.github/workflows/test.yaml b/.github/workflows/test.yaml	(rejected hunks
 +    branches: [main]
 +  schedule:
 +    - cron: "0 5 1,15 * *"
- 
+
  concurrency:
 -    group: ${{ github.workflow }}-${{ github.ref }}
 -    cancel-in-progress: true
 +  group: ${{ github.workflow }}-${{ github.ref }}
 +  cancel-in-progress: true
- 
+
  jobs:
 -    test:
 -        runs-on: ${{ matrix.os }}
@@ -37,7 +37,7 @@ diff a/.github/workflows/test.yaml b/.github/workflows/test.yaml	(rejected hunks
 +    defaults:
 +      run:
 +        shell: bash -e {0} # -e to fail on error
- 
+
 +    strategy:
 +      fail-fast: false
 +      matrix:

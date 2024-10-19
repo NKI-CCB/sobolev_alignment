@@ -52,7 +52,10 @@ class TestKRRApprox:
     @pytest.fixture(scope="class")
     def sklearn_rbf_KRR(self):
         return KRRApprox(
-            method="sklearn", kernel="rbf", kernel_params={"gamma": 1 / (2 * n_genes)}, penalization=penalization
+            method="sklearn",
+            kernel="rbf",
+            kernel_params={"gamma": 1 / (2 * n_genes)},
+            penalization=penalization,
         )
 
     @pytest.fixture(scope="class")
@@ -67,7 +70,10 @@ class TestKRRApprox:
     @pytest.fixture(scope="class")
     def sklearn_laplacian_KRR(self):
         return KRRApprox(
-            method="sklearn", kernel="laplacian", kernel_params={"gamma": 1 / (2 * n_genes)}, penalization=penalization
+            method="sklearn",
+            kernel="laplacian",
+            kernel_params={"gamma": 1 / (2 * n_genes)},
+            penalization=penalization,
         )
 
     @pytest.fixture(scope="class")
@@ -171,17 +177,27 @@ class TestKRRApprox:
 
     def test_rbf_sklearn_fit(self, fit_sklearn_rbf_ridge, valid_input, valid_embedding):
         pred = fit_sklearn_rbf_ridge.transform(valid_input)
-        pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+        pearson_corr = scipy.stats.pearsonr(
+            pred.flatten(), valid_embedding.detach().numpy().flatten()
+        )
         assert pearson_corr[0] > pearson_threshold
 
-    def test_matern_sklearn_fit(self, fit_sklearn_matern_ridge, valid_input, valid_embedding):
+    def test_matern_sklearn_fit(
+        self, fit_sklearn_matern_ridge, valid_input, valid_embedding
+    ):
         pred = fit_sklearn_matern_ridge.transform(valid_input)
-        pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+        pearson_corr = scipy.stats.pearsonr(
+            pred.flatten(), valid_embedding.detach().numpy().flatten()
+        )
         assert pearson_corr[0] > pearson_threshold
 
-    def test_laplacian_sklearn_fit(self, fit_sklearn_laplacian_ridge, valid_input, valid_embedding):
+    def test_laplacian_sklearn_fit(
+        self, fit_sklearn_laplacian_ridge, valid_input, valid_embedding
+    ):
         pred = fit_sklearn_laplacian_ridge.transform(valid_input)
-        pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+        pearson_corr = scipy.stats.pearsonr(
+            pred.flatten(), valid_embedding.detach().numpy().flatten()
+        )
         assert pearson_corr[0] > pearson_threshold
 
     ###
@@ -191,35 +207,59 @@ class TestKRRApprox:
     def test_rbf_falkon_fit(self, fit_falkon_rbf_ridge, valid_input, valid_embedding):
         if fit_falkon_rbf_ridge is not None:
             pred = fit_falkon_rbf_ridge.transform(valid_input)
-            pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+            pearson_corr = scipy.stats.pearsonr(
+                pred.flatten(), valid_embedding.detach().numpy().flatten()
+            )
             assert pearson_corr[0] > pearson_threshold
 
-    def test_matern_falkon_fit(self, fit_falkon_matern_ridge, valid_input, valid_embedding):
+    def test_matern_falkon_fit(
+        self, fit_falkon_matern_ridge, valid_input, valid_embedding
+    ):
         if fit_falkon_matern_ridge is not None:
             pred = fit_falkon_matern_ridge.transform(valid_input)
-            pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+            pearson_corr = scipy.stats.pearsonr(
+                pred.flatten(), valid_embedding.detach().numpy().flatten()
+            )
             assert pearson_corr[0] > pearson_threshold
 
-    def test_laplacian_falkon_fit(self, fit_falkon_laplacian_ridge, valid_input, valid_embedding):
+    def test_laplacian_falkon_fit(
+        self, fit_falkon_laplacian_ridge, valid_input, valid_embedding
+    ):
         if fit_falkon_laplacian_ridge is not None:
             pred = fit_falkon_laplacian_ridge.transform(valid_input)
-            pearson_corr = scipy.stats.pearsonr(pred.flatten(), valid_embedding.detach().numpy().flatten())
+            pearson_corr = scipy.stats.pearsonr(
+                pred.flatten(), valid_embedding.detach().numpy().flatten()
+            )
             assert pearson_corr[0] > pearson_threshold
 
-    def test_ridge_coef_sklearn_fit(self, fit_sklearn_laplacian_ridge, input, valid_input):
+    def test_ridge_coef_sklearn_fit(
+        self, fit_sklearn_laplacian_ridge, input, valid_input
+    ):
         if fit_sklearn_laplacian_ridge is not None:
             pred_reconstruct = fit_sklearn_laplacian_ridge.kernel_(
                 valid_input, input[fit_sklearn_laplacian_ridge.ridge_samples_idx_, :]
             )
-            pred_reconstruct = pred_reconstruct.dot(fit_sklearn_laplacian_ridge.sample_weights_)
+            pred_reconstruct = pred_reconstruct.dot(
+                fit_sklearn_laplacian_ridge.sample_weights_
+            )
             np.testing.assert_array_almost_equal(
-                pred_reconstruct, fit_sklearn_laplacian_ridge.transform(valid_input), decimal=3
+                pred_reconstruct,
+                fit_sklearn_laplacian_ridge.transform(valid_input),
+                decimal=3,
             )
 
-    def test_ridge_coef_falkon_fit(self, fit_falkon_laplacian_ridge, input, valid_input):
+    def test_ridge_coef_falkon_fit(
+        self, fit_falkon_laplacian_ridge, input, valid_input
+    ):
         if fit_falkon_laplacian_ridge is not None:
-            pred_reconstruct = fit_falkon_laplacian_ridge.kernel_(valid_input, fit_falkon_laplacian_ridge.anchors())
-            pred_reconstruct = pred_reconstruct.matmul(fit_falkon_laplacian_ridge.sample_weights_)
+            pred_reconstruct = fit_falkon_laplacian_ridge.kernel_(
+                valid_input, fit_falkon_laplacian_ridge.anchors()
+            )
+            pred_reconstruct = pred_reconstruct.matmul(
+                fit_falkon_laplacian_ridge.sample_weights_
+            )
             np.testing.assert_array_almost_equal(
-                pred_reconstruct, fit_falkon_laplacian_ridge.transform(valid_input), decimal=3
+                pred_reconstruct,
+                fit_falkon_laplacian_ridge.transform(valid_input),
+                decimal=3,
             )

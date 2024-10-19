@@ -7,7 +7,7 @@ diff a/docs/conf.py b/docs/conf.py	(rejected hunks)
  # list see the documentation:
  # https://www.sphinx-doc.org/en/master/usage/configuration.html
 @@ -36,10 +36,10 @@ needs_sphinx = "4.0"
- 
+
  html_context = {
      "display_github": True,  # Integrate GitHub
 -    "github_user": "saroudant",  # Username
@@ -19,7 +19,7 @@ diff a/docs/conf.py b/docs/conf.py	(rejected hunks)
 +    "github_version": "main",
 +    "conf_py_path": "/docs/",
  }
- 
+
  # -- General configuration ---------------------------------------------------
 @@ -57,6 +57,7 @@ extensions = [
      "sphinx_autodoc_typehints",
@@ -28,7 +28,7 @@ diff a/docs/conf.py b/docs/conf.py	(rejected hunks)
 +    "sphinxext.opengraph",
      *[p.stem for p in (HERE / "extensions").glob("*.py")],
  ]
- 
+
 @@ -108,12 +109,15 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
  #
  html_theme = "sphinx_book_theme"
@@ -36,14 +36,14 @@ diff a/docs/conf.py b/docs/conf.py	(rejected hunks)
 +html_css_files = ["css/custom.css"]
 +
  html_title = project_name
- 
+
  html_theme_options = {
      "repository_url": repository_url,
      "use_repository_button": True,
      "path_to_docs": "docs/",
 +    "navigation_with_keys": False,
  }
- 
+
  pygments_style = "default"
 @@ -123,18 +127,3 @@ nitpick_ignore = [
      # you can add an exception to this list.

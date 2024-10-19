@@ -87,10 +87,18 @@ def model_selection(
     # Bayesian optimisation
     save_hyperopt_res = Trials()
     _objective_function = make_objective_function(
-        train_data_an=train_data_an, test_data_an=test_data_an, batch_key=batch_key, model=model
+        train_data_an=train_data_an,
+        test_data_an=test_data_an,
+        batch_key=batch_key,
+        model=model,
     )
     best = fmin(
-        _objective_function, space, algo=tpe.suggest, max_evals=max_eval, return_argmin=False, trials=save_hyperopt_res
+        _objective_function,
+        space,
+        algo=tpe.suggest,
+        max_evals=max_eval,
+        return_argmin=False,
+        trials=save_hyperopt_res,
     )
 
     # Save
@@ -101,7 +109,9 @@ def model_selection(
     return best, hyperopt_results_df, save_hyperopt_res
 
 
-def make_objective_function(train_data_an, test_data_an, batch_key=None, model=scvi.model.SCVI):
+def make_objective_function(
+    train_data_an, test_data_an, batch_key=None, model=scvi.model.SCVI
+):
     """
     Generate Hyperopt objective function.
 
@@ -160,8 +170,12 @@ def make_objective_function(train_data_an, test_data_an, batch_key=None, model=s
             clf.train(plan_kwargs=plan_kwargs, **trainer_kwargs)
 
             # Reconstruction error
-            test_reconstruction_error = clf.get_reconstruction_error(adata=test_data_an)["reconstruction_loss"]
-            train_reconstruction_error = clf.get_reconstruction_error()["reconstruction_loss"]
+            test_reconstruction_error = clf.get_reconstruction_error(
+                adata=test_data_an
+            )["reconstruction_loss"]
+            train_reconstruction_error = clf.get_reconstruction_error()[
+                "reconstruction_loss"
+            ]
 
             # ELBO
             test_elbo = clf.get_elbo(adata=test_data_an)

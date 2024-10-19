@@ -23,7 +23,10 @@ class MultiKRRApprox:
 
     def predict(self, X: torch.Tensor):
         """Predict latent factor values given a tensor."""
-        prediction = [clf.transform(torch.Tensor(X)).detach().numpy() for clf in self.krr_regressors]
+        prediction = [
+            clf.transform(torch.Tensor(X)).detach().numpy()
+            for clf in self.krr_regressors
+        ]
         prediction = torch.Tensor(prediction)
         prediction = torch.mean(prediction, axis=0)
 
@@ -40,7 +43,9 @@ class MultiKRRApprox:
     def process_clfs(self):
         """Process the different classifiers."""
         self.anchors_ = torch.cat([clf.anchors() for clf in self.krr_regressors])
-        self.sample_weights_ = torch.cat([clf.sample_weights_ for clf in self.krr_regressors])
+        self.sample_weights_ = torch.cat(
+            [clf.sample_weights_ for clf in self.krr_regressors]
+        )
         self.sample_weights_ = 1 / len(self.krr_regressors) * self.sample_weights_
         self.kernel_ = self.krr_regressors[0].kernel_
 
